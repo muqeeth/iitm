@@ -1,0 +1,352 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+CS6380: Othello Game-Playing Bot
+\end_layout
+
+\begin_layout Author
+V.C.Ashwin
+\begin_inset Newline newline
+\end_inset
+
+EE16B041
+\begin_inset Newline newline
+\end_inset
+
+Muqeeth Mohammed
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Othello is a board game between 2 players say, 
+\begin_inset Formula $black$
+\end_inset
+
+ and 
+\begin_inset Formula $red$
+\end_inset
+
+, played on an 
+\begin_inset Formula $8X8$
+\end_inset
+
+ board.
+ It starts with four discs being placed at the center of the board and typically
+ 
+\begin_inset Formula $black$
+\end_inset
+
+ takes the first move.
+ The goal of the game is to place discs such that you have more number of
+ discs than that of the opponent when the game ends.
+ It involves capturing the discs of the opponent and replacing them with
+ your discs.
+ 
+\end_layout
+
+\begin_layout Standard
+We have implemented a game-playing bot which emulates a player by performing
+ moves with certain optimal strategies.
+ For this purpose we have used the 
+\begin_inset Formula $Minimax$
+\end_inset
+
+ Algorithm with 
+\begin_inset Formula $iterative-deepening$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha-\beta$
+\end_inset
+
+ pruning to develop a strategy for the best next move possible.
+\end_layout
+
+\begin_layout Section
+Alpha-Beta Algorithm
+\end_layout
+
+\begin_layout Standard
+We find the best possible move by considering the best one out of all the
+ valid moves of the 
+\begin_inset Formula $MAX$
+\end_inset
+
+ node.
+ We calculate the heuristic value of the nodes at the final depth from the
+ 
+\begin_inset Formula $evaluation-function$
+\end_inset
+
+.
+ These values are translated upwards by recursion based on the 
+\begin_inset Formula $MAX$
+\end_inset
+
+ node or 
+\begin_inset Formula $MIN$
+\end_inset
+
+ node.
+ If at any instance the value of the node is 
+\begin_inset Formula $>\beta$
+\end_inset
+
+ or 
+\begin_inset Formula $<\alpha$
+\end_inset
+
+ then it is pruned and not explored further.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha-\beta$
+\end_inset
+
+ Algorithm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /home/ashwin/Downloads/Screenshot from 2019-10-20 17-32-11.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Evaluation Function
+\end_layout
+
+\begin_layout Subsection
+Corners
+\end_layout
+
+\begin_layout Standard
+This evaluates the effect of the corners of the board,
+\begin_inset Formula $i.e$
+\end_inset
+
+ 
+\begin_inset Formula $[0,0],[0,7],[7,0],[7,7]$
+\end_inset
+
+ as they play a crucial role in deciding the winner.
+ If a 
+\begin_inset Formula $MAX$
+\end_inset
+
+ node is placed at this location 
+\begin_inset Formula $high$
+\end_inset
+
+ value is assigned and vice-versa in the case of 
+\begin_inset Formula $MIN$
+\end_inset
+
+ node.
+ 
+\end_layout
+
+\begin_layout Subsection
+Difference of Discs
+\end_layout
+
+\begin_layout Standard
+We calculate the disc difference on the current board state and assign a
+ reasonable weight during mid-game and end-game.
+ At the start of the it is not very significant since the positional value
+ and the mobility are more dominant.
+\end_layout
+
+\begin_layout Subsection
+Parity
+\end_layout
+
+\begin_layout Standard
+It measures the player who is expected to make the last move,i.e 
+\begin_inset Formula $parity=(EmptyLocations)\%2$
+\end_inset
+
+.
+ If it is 
+\begin_inset Formula $0$
+\end_inset
+
+ then the opponent has a higher chance and vice-versa.
+ 
+\end_layout
+
+\begin_layout Subsection
+Mobility
+\end_layout
+
+\begin_layout Standard
+For a given state of the board mobility is defined as the difference of
+ the number of valid moves of the first player and that of the second player.
+ 
+\begin_inset Formula $Mobility=Black_{moves}-Red_{moves}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Positional Value
+\end_layout
+
+\begin_layout Standard
+We assign weights to each square on the board and calculate the value for
+ a given board state.
+ High values are assigned at the last rows and columns, negative values
+ are assigned to the penultimate rows/columns.
+ This is because logically a higher chance of placing discs on the last
+ rows/columns indicates a greater chance of winning.
+\end_layout
+
+\begin_layout Section
+Summing Up...
+\end_layout
+
+\begin_layout Standard
+To sum up the entire procedure, we calculate the 
+\begin_inset Formula $\alpha-values$
+\end_inset
+
+ of each valid move through iterative deepening and return then best move.
+ For a given depth the heuristic value is obtained from the evaluation function
+ as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "bots/MyBot/MyBot.cpp"
+lstparams "breaklines=true,captionpos=b,firstline=186,lastline=193,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
