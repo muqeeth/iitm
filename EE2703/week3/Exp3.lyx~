@@ -1,0 +1,1462 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Fourier Approximations
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Department of Electrical Engineering
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+This report explains fourier approximations taking a periodic and a non
+ periodic function as examples.The approach is made by least squares method
+ and direct integration method.
+ 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+We will compute fourier series of two functions,
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ over the interval [0,
+\begin_inset Formula $2\pi)$
+\end_inset
+
+ using Eq.
+ (1) and Eq.
+ (2)
+\begin_inset Formula 
+\begin{equation}
+a_{0}+\sum_{n=1}^{\infty}\left\{ a_{n}\cos(nx)+b_{n}\sin(nx)\right\} 
+\end{equation}
+
+\end_inset
+
+where the coefficients 
+\begin_inset Formula $a_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{n}$
+\end_inset
+
+are given as
+\begin_inset Formula 
+\[
+a_{0}=\frac{1}{2\pi}\int_{0}^{2\pi}f(x)dx
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+a_{n}=\frac{1}{\pi}\int_{0}^{2\pi}f(x)\cos(nx)dx
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{n}=\frac{1}{\pi}\int_{0}^{2\pi}f(x)\sin(nx)dx
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+for least square approach we take 25 coefficients
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+a_{0}+\sum_{n=1}^{25}a_{n}cos(nx_{i})+\sum_{n=1}^{25}b_{n}sin(nx_{i})\approx f(x_{i})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This turns into matrix problem Ac = b :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{cccccc}
+1 & cos(x_{1}) & sin(x_{1}) & \ldots & cos(25x_{1}) & sin(25x_{1})\\
+1 & cos(x_{2}) & sin(x_{2}) & \ldots & cos(25x_{2}) & sin(25x_{2})\\
+\ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\
+1 & cos(x_{400}) & sin(x_{400}) & \ldots & cos(25x_{400}) & sin(25x_{400})
+\end{array}\right)\left(\begin{array}{c}
+a_{0}\\
+a_{1}\\
+b_{1}\\
+\ldots\\
+a_{25}\\
+b_{25}
+\end{array}\right)=\left(\begin{array}{c}
+f(x_{1})\\
+f(x_{2})\\
+\ldots\\
+f(x_{400})
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where c are fourier coefficents.
+\end_layout
+
+\begin_layout Section
+Using integral approach
+\end_layout
+
+\begin_layout Subsection
+Define functions 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ and plot them:
+\end_layout
+
+\begin_layout Enumerate
+follow below code for defining two functions and plotting them:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=124,lastline=166,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The corresponding plots are in Figure 1 and 2 respectively.
+ 
+\end_layout
+
+\begin_layout Subsection
+Obtain first 51 coefficients for 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+create two new functions to be integrated, namely u(x, k) = f (x) cos (kx)
+ and v(x, k) = f (x) sin (kx)
+\end_layout
+
+\begin_layout Enumerate
+To integrate these, use the option in quad to pass extra arguments to the
+ function being integrated.Append index zero of return values into a list
+\begin_inset Formula 
+\[
+coeff=quad(u,0,2*pi,args=(k))[0]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Follow below code to get coefficients:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=1,lastline=37,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Take above coefficients in this vector form
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+a_{0}\\
+a_{1}\\
+b_{1}\\
+\ldots\\
+a_{25}\\
+b_{25}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+To take coefficients in given vector form
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=39,lastline=48,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Plot magnitude of coefficients:
+\end_layout
+
+\begin_layout Enumerate
+Follow below code for plotting magnitude of coefficients:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=86,lastline=118,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Magnitude of coefficients for 
+\begin_inset Formula $f(x)=\exp(x)$
+\end_inset
+
+ are in Figures 3 and 4, and the coefficients for
+\begin_inset Formula $f(x)=\cos(\cos x)$
+\end_inset
+
+ are in Figures 5 and 6
+\end_layout
+
+\begin_layout Subsection
+Results and Discussion
+\end_layout
+
+\begin_layout Enumerate
+From Figure 1 clearly 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ is not periodic.The expected plot in Figure 1 does not match with 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ semilog plot because it is not periodic and discontinuity.
+\end_layout
+
+\begin_layout Enumerate
+From Figure 2 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ is periodic.The expected plot in Figure 2 matches exactly with 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+exp(x) vs x
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_1.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+cos(cos(x)) vs x
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_2.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Using leastsquares approach:
+\end_layout
+
+\begin_layout Subsection
+Solve Eq .
+ 3 to get fourier coefficients
+\end_layout
+
+\begin_layout Enumerate
+Define a vector x going from 0 to 2π in 400 steps using linspace.
+\end_layout
+
+\begin_layout Enumerate
+Solve Ac = b using 
+\begin_inset Formula $c=lstsq(A,b)[0]$
+\end_inset
+
+.It retuns a list of coefficients in the from mentioned in section 2.2.
+\end_layout
+
+\begin_layout Enumerate
+The code for it is below:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=51,lastline=66,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The plot of magnitudes of coefficients of 
+\begin_inset Formula $f(x)=\exp(x)$
+\end_inset
+
+ are in Figures 3 and 4, and the coefficients for
+\begin_inset Formula $f(x)=\cos(\cos x)$
+\end_inset
+
+ are in Figures 5 and 6 respectively.
+\end_layout
+
+\begin_layout Subsection
+Compare the answers got by least squares and by the direct integration.
+ Calculate deviation
+\end_layout
+
+\begin_layout Enumerate
+Now we have coefficients obtained by both approaches.
+ c1_intg,c2_intg under section2.2, c1_lsa,c2_lsa under section 3.1 have coefficien
+ts 
+\begin_inset Formula $a_{n}$
+\end_inset
+
+
+\begin_inset Formula $b_{n}$
+\end_inset
+
+ of 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ respectively.
+\end_layout
+
+\begin_layout Enumerate
+The deviation between coefficients is calculated as follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=69,lastline=83,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+From estimated values of coefficients of exp(x) and cos(cos(x)) in c1_lsa
+ and c2_lsa respectively.
+ we can get function values by computing A.c1_lsa and A.c2_lsa
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,firstline=120,lastline=122,frame=tb"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Results and Discussion:
+\end_layout
+
+\begin_layout Enumerate
+From Figure 5 and Figure 6 , the 
+\begin_inset Formula $b_{n}$
+\end_inset
+
+coefficients of 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ is nearly zero since 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ is even function and 
+\begin_inset Formula $\sin(nx)$
+\end_inset
+
+ is odd function.The integral over 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ of 
+\begin_inset Formula $\cos(\cos(x))\sin(nx)$
+\end_inset
+
+ is zero.
+\end_layout
+
+\begin_layout Enumerate
+Since 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ is continuous it can be constructed using lesser frequency components i.e
+ k ranging from 0 to 25.But 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ is discontinuous at 
+\begin_inset Formula $2m\pi$
+\end_inset
+
+ so to accomodate discontinuity high frequency components are required i.e
+ k values should range more than 25.
+\end_layout
+
+\begin_layout Enumerate
+The Riemann-Lebesgue lemma says that the Fourier coefficients converge to
+ zero as |k| → ∞.The more smoother the function is ,the fast the fourier
+ coefficients converges to zero.Since 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ is infinitely differentiable(hence smoother) its coefficients decay faster
+ when compared to 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ which is discontinuous at multiples of 
+\begin_inset Formula $2\pi$
+\end_inset
+
+(hence not smoother).
+ These rate of decay can be seen in Figures 3,4,5,6 
+\end_layout
+
+\begin_layout Enumerate
+The integral which computes 
+\begin_inset Formula $a_{n}$
+\end_inset
+
+,
+\begin_inset Formula $b_{n}$
+\end_inset
+
+of 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ will be of the form 
+\begin_inset Formula $\frac{const}{1+n^{2}}$
+\end_inset
+
+ which on loglog plot looks linear.Hence the Figure 4 is linear.
+\begin_inset Formula 
+\[
+\int_{0}^{2\pi}e^{x}\cos(nx)dx=\frac{e^{2\pi}-1}{1+n^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\int_{0}^{2\pi}cos(cos(x))cos(kx)dx$
+\end_inset
+
+ takes the form of 
+\begin_inset Formula $r^{k}$
+\end_inset
+
+ which on semilog log plot looks linear and as 
+\begin_inset Formula $k\rightarrow largevalue$
+\end_inset
+
+ integral goes to zero from Riemann-Lebesgue lemma.Hence Figure 5 is linear.
+\end_layout
+
+\begin_layout Enumerate
+The deviation of coefficients obtained from integral and leastsquares are
+ 
+\begin_inset Formula $1.33273087034$
+\end_inset
+
+ and 
+\begin_inset Formula $2.63744981915e-15$
+\end_inset
+
+ for 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ respectively.The values do not agree because integral approach assumes infinite
+ coefficients to construct the functions whereas leastsquares tries to fit
+ it to curves with 25 coefficients only(as we have taken).
+ 
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $\cos(\cos(x))$
+\end_inset
+
+ since 25 coefficients make the function closer enough the least squares
+ fits properly to expected one.
+ whereas for 
+\begin_inset Formula $\exp(x)$
+\end_inset
+
+ because of its discontinuity it requires higher frequency coefficients,
+ therefore plot from 25 coefficients approach closer to function except
+ at discontinuity where disagreement is clearly seen from Figure 1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+semilog plot of coefficients of exp(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_3.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+loglog plot of coefficients of exp(x)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_4.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+semilog plot of coefficients of cos(cos(x))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_5.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+loglog plot of coefficients of cos(cos(x))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figure_6.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Python code:
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+from scipy.integrate import quad
+\end_layout
+
+\begin_layout LyX-Code
+def f(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return exp(x)
+\end_layout
+
+\begin_layout LyX-Code
+def g(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return cos(cos(x))
+\end_layout
+
+\begin_layout LyX-Code
+def u(x,k):
+\end_layout
+
+\begin_layout LyX-Code
+    return f(x)*cos(k*x)
+\end_layout
+
+\begin_layout LyX-Code
+def v(x,k):
+\end_layout
+
+\begin_layout LyX-Code
+    return f(x)*sin(k*x)
+\end_layout
+
+\begin_layout LyX-Code
+a = []
+\end_layout
+
+\begin_layout LyX-Code
+b = []
+\end_layout
+
+\begin_layout LyX-Code
+#get fourier coefficients of exp(x) into a and b lists
+\end_layout
+
+\begin_layout LyX-Code
+a.append((quad(u,0,2*pi,args=(0)))[0]/(2*pi))
+\end_layout
+
+\begin_layout LyX-Code
+for k in range(1,26):
+\end_layout
+
+\begin_layout LyX-Code
+    a.append(quad(u,0,2*pi,args=(k))[0]/pi)
+\end_layout
+
+\begin_layout LyX-Code
+    b.append(quad(v,0,2*pi,args=(k))[0]/pi)
+\end_layout
+
+\begin_layout LyX-Code
+def w(x,k):
+\end_layout
+
+\begin_layout LyX-Code
+    return g(x)*cos(k*x)
+\end_layout
+
+\begin_layout LyX-Code
+def z(x,k):
+\end_layout
+
+\begin_layout LyX-Code
+    return g(x)*sin(k*x)
+\end_layout
+
+\begin_layout LyX-Code
+c = []
+\end_layout
+
+\begin_layout LyX-Code
+d = []
+\end_layout
+
+\begin_layout LyX-Code
+#get fourier coefficients of cos(cos(x)) into  c and d lists
+\end_layout
+
+\begin_layout LyX-Code
+c.append((quad(w,0,2*pi,args=(0)))[0]/(2*pi))
+\end_layout
+
+\begin_layout LyX-Code
+for k in range(1,26):
+\end_layout
+
+\begin_layout LyX-Code
+    c.append(quad(w,0,2*pi,args=(k))[0]/pi)
+\end_layout
+
+\begin_layout LyX-Code
+    d.append(quad(z,0,2*pi,args=(k))[0]/pi)
+\end_layout
+
+\begin_layout LyX-Code
+#To take coefficients in given vector form of integral approach
+\end_layout
+
+\begin_layout LyX-Code
+c1_intg = [0]*(len(a)+len(b))
+\end_layout
+
+\begin_layout LyX-Code
+c1_intg[0] = a[0]
+\end_layout
+
+\begin_layout LyX-Code
+c1_intg[1::2] = a[1:]
+\end_layout
+
+\begin_layout LyX-Code
+c1_intg[2::2] = b# Now c1_intg has exp(x) fourier coefficients
+\end_layout
+
+\begin_layout LyX-Code
+c2_intg = [0]*(len(c)+len(d))
+\end_layout
+
+\begin_layout LyX-Code
+c2_intg[0] = c[0]
+\end_layout
+
+\begin_layout LyX-Code
+c2_intg[1::2] = c[1:]
+\end_layout
+
+\begin_layout LyX-Code
+c2_intg[2::2] = d#Now c2_intg has cos(cos(x)) fourier
+\end_layout
+
+\begin_layout LyX-Code
+#least square approach
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(0,2*pi,401)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1] # drop last term to have a proper periodic integral
+\end_layout
+
+\begin_layout LyX-Code
+b=f(x)
+\end_layout
+
+\begin_layout LyX-Code
+c=g(x)
+\end_layout
+
+\begin_layout LyX-Code
+# f has been written to take a vector
+\end_layout
+
+\begin_layout LyX-Code
+A=zeros((400,51))
+\end_layout
+
+\begin_layout LyX-Code
+# allocate space for A
+\end_layout
+
+\begin_layout LyX-Code
+A[:,0]=1
+\end_layout
+
+\begin_layout LyX-Code
+# col 1 is all ones
+\end_layout
+
+\begin_layout LyX-Code
+for k in range(1,26):
+\end_layout
+
+\begin_layout LyX-Code
+    A[:,2*k-1]=cos(k*x) # cos(kx) column
+\end_layout
+
+\begin_layout LyX-Code
+    A[:,2*k]=sin(k*x)
+\end_layout
+
+\begin_layout LyX-Code
+# sin(kx) column
+\end_layout
+
+\begin_layout LyX-Code
+#endfor
+\end_layout
+
+\begin_layout LyX-Code
+c1_lsa=lstsq(A,b)[0]#coefficients of exp(x) using leastsquares approach
+\end_layout
+
+\begin_layout LyX-Code
+c1_intg = asarray(c1_intg) 
+\end_layout
+
+\begin_layout LyX-Code
+deviation = max(abs(c1_lsa-c1_intg))#get max deviation
+\end_layout
+
+\begin_layout LyX-Code
+print deviation
+\end_layout
+
+\begin_layout LyX-Code
+c2_lsa=lstsq(A,c)[0]#coefficients using leastsquares approach
+\end_layout
+
+\begin_layout LyX-Code
+c2_intg = asarray(c2_intg)
+\end_layout
+
+\begin_layout LyX-Code
+deviation = max(abs(c2_lsa-c2_intg))#get max deviation
+\end_layout
+
+\begin_layout LyX-Code
+print deviation
+\end_layout
+
+\begin_layout LyX-Code
+#to print coefficients of exp(x) and cos(cos(x)) with both approaches
+\end_layout
+
+\begin_layout LyX-Code
+print c1_intg
+\end_layout
+
+\begin_layout LyX-Code
+print c2_intg
+\end_layout
+
+\begin_layout LyX-Code
+print c1_lsa
+\end_layout
+
+\begin_layout LyX-Code
+print c2_lsa
+\end_layout
+
+\begin_layout LyX-Code
+x1 = arange(0,51,1)#we take 26 a_n and 25 b_n coefficients
+\end_layout
+
+\begin_layout LyX-Code
+#semilog plot of coefficients of exp(x)
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('semilog plot of coefficients of exp(x)')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,absolute(c1_intg),'ro')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,absolute(c1_lsa),'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('n')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('magnitude of coefficients')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['$integral approach$','$leastsquares approach$'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+#loglog plot of coefficients of exp(x)
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('loglog plot of coefficients of exp(x)')
+\end_layout
+
+\begin_layout LyX-Code
+plt.loglog(x1,absolute(c1_intg),'ro')
+\end_layout
+
+\begin_layout LyX-Code
+plt.loglog(x1,absolute(c1_lsa),'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('n')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('magnitude of coefficients')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['$integral approach$','$leastsquares approach$'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+#semilog plot of coefficients of cos(cos(x))
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('semilog plot of coefficients of cos(cos(x))')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,absolute(c2_intg),'ro')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,absolute(c2_lsa),'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('n')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('magnitude of coefficients')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['$integral approach$','$leastsquares approach$'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+#loglog plot of coefficients of exp(x)
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('loglog plot of coefficients of cos(cos(x))')
+\end_layout
+
+\begin_layout LyX-Code
+plt.loglog(x1,absolute(c2_intg),'ro')
+\end_layout
+
+\begin_layout LyX-Code
+plt.loglog(x1,absolute(c2_lsa),'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('n')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('magnitude of coefficients')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['$integral approach$','$leastsquares approach$'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+#get values of functions by performing matrix multiplication on A and coefficien
+ts from least squares
+\end_layout
+
+\begin_layout LyX-Code
+fn_values = dot(A,c1_lsa)
+\end_layout
+
+\begin_layout LyX-Code
+gn_values = dot(A,c2_lsa)
+\end_layout
+
+\begin_layout LyX-Code
+def f1(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return exp(x)
+\end_layout
+
+\begin_layout LyX-Code
+def f2(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return cos(cos(x))
+\end_layout
+
+\begin_layout LyX-Code
+def f3(x):
+\end_layout
+
+\begin_layout LyX-Code
+    l = []
+\end_layout
+
+\begin_layout LyX-Code
+    for i in x:
+\end_layout
+
+\begin_layout LyX-Code
+        if(i<0):
+\end_layout
+
+\begin_layout LyX-Code
+            i = i + 2*pi
+\end_layout
+
+\begin_layout LyX-Code
+        if(i>2*pi):
+\end_layout
+
+\begin_layout LyX-Code
+            i = i - 2*pi
+\end_layout
+
+\begin_layout LyX-Code
+        l.append(i)
+\end_layout
+
+\begin_layout LyX-Code
+    return exp(l)
+\end_layout
+
+\begin_layout LyX-Code
+def f4(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return cos(cos(x))
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(0,2*pi,401)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1] # drop last term to have a proper periodic integral
+\end_layout
+
+\begin_layout LyX-Code
+x1 = arange(-2*pi,4*pi,0.1)
+\end_layout
+
+\begin_layout LyX-Code
+y1 = f1(x1)
+\end_layout
+
+\begin_layout LyX-Code
+y2 = f2(x1)
+\end_layout
+
+\begin_layout LyX-Code
+y3 = f3(x1)
+\end_layout
+
+\begin_layout LyX-Code
+y4 = f4(x1)
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,y1,'r')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x1,y3,'k')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x,fn_values,'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.grid(color='k',linestyle ='-',linewidth = 1)
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('$f(x) = e^x$')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['semilog plot of f(x) vs x','expected plot from fourier','plot
+ from leastsquares'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x1,y2,'r')
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x1,y4,'k')
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x,gn_values,'go')
+\end_layout
+
+\begin_layout LyX-Code
+plt.grid(color='k',linestyle ='-',linewidth = 1)
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('$f(x) = cos(cos(x))$')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['linear plot of f(x) vs x','expected plot from fourier','plot
+ from leastsquares'],loc='best')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_body
+\end_document

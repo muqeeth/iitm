@@ -1,0 +1,1008 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analysis of Circuits using Laplace Transforms
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+We discuss symbolic algebra and analysis of circuits using laplace transforms.We
+ get introduced to sympy module and how to convert expressions in sympy
+ to pylab functions.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Itemize
+Sympy helps us do symbolic work.These symbols are defined as below.The symbols
+ are not python variables.
+\begin_inset Formula 
+\[
+w=symbols(\text{’}omega\text{’})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+It has Matrix function built into it which helps to define a matrix.M = Matrix([1
+ 2],[3 4]) gives 
+\begin_inset Formula $\left(\begin{array}{cc}
+1 & 2\\
+3 & 4
+\end{array}\right)$
+\end_inset
+
+.The inv function helps us in computing inverse of a matrix .It is done as
+ M.inv().
+\end_layout
+
+\begin_layout Itemize
+Sympy has evalf function to evaluate value for the symbol as expr = sqrt(2)
+ ,expr.evalf() returns 1.414.
+\end_layout
+
+\begin_layout Itemize
+For magnitude response of laplace transform we use lambdify function.
+\end_layout
+
+\begin_layout Section
+Low pass filter
+\end_layout
+
+\begin_layout Subsection
+Writing the nodal equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{cccc}
+0 & 0 & 1 & \frac{-1}{G}\\
+\frac{-1}{1+sR_{2}C_{2}} & 1 & 0 & 0\\
+0 & -1000 & 1000 & 1\\
+\frac{-1}{R_{1}}-\frac{1}{R_{2}}-sC_{1} & \frac{1}{R_{2}} & 0 & sC_{1}
+\end{array}\right)\left(\begin{array}{c}
+V_{1}\\
+V_{P}\\
+V_{m}\\
+V_{0}
+\end{array}\right)=\left(\begin{array}{c}
+0\\
+0\\
+0\\
+-\frac{V_{i}(S)}{R1}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The transfer of the system 
+\begin_inset Formula $\frac{V_{o}(s)}{V_{i}(s)}$
+\end_inset
+
+ comes from solving for x in Ax=b ie x = inv(A).b
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V_{o}(s)$
+\end_inset
+
+ is in x[3].
+\end_layout
+
+\begin_layout Itemize
+For calculating impulse response of system we give 
+\begin_inset Formula $V_{i}(s)=1$
+\end_inset
+
+ and for step response of system we give 
+\begin_inset Formula $V_{i}(s)=\frac{1}{s}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Itemize
+Sympy helps in defining matrix with symbols.
+ inv function calculates inverse of matrix.The lambdify takes 
+\begin_inset Formula $V_{o}(s)$
+\end_inset
+
+ and converts it into a python function.
+\end_layout
+
+\begin_layout LyX-Code
+s = symbols('s')
+\end_layout
+
+\begin_layout LyX-Code
+def lowpass(R1,R2,C1,C2,G,Vi):
+\end_layout
+
+\begin_layout LyX-Code
+    A=Matrix([[0,0,1.0,-1.0/G],[-1.0/(1.0+s*R2*C2),1.0,0,0],
+\end_layout
+
+\begin_layout LyX-Code
+    [0,-1000.0,1000.0,1.0],[-1.0/R1-1.0/R2-s*C1,1.0/R2,0,s*C1]])
+\end_layout
+
+\begin_layout LyX-Code
+    b=Matrix([0,0,0,-Vi/R1])
+\end_layout
+
+\begin_layout LyX-Code
+    V=A.inv()*b
+\end_layout
+
+\begin_layout LyX-Code
+    return (A,b,V)
+\end_layout
+
+\begin_layout Subsection
+Plot magnitude response
+\end_layout
+
+\begin_layout Itemize
+we define range of w for which magnitude response to be calculated using
+ logspace.
+\end_layout
+
+\begin_layout Itemize
+Since we have transfer function as function of s.
+ For bode plot we put s=jw.The corresponding plot is in figure 1
+\end_layout
+
+\begin_layout LyX-Code
+A,b,V=lowpass(10000.0,10000.0,1e-9,1e-9,1.586,1.0)
+\end_layout
+
+\begin_layout LyX-Code
+Vo=V[3]
+\end_layout
+
+\begin_layout LyX-Code
+print simplify(Vo)
+\end_layout
+
+\begin_layout LyX-Code
+w=p.logspace(0,8,801)
+\end_layout
+
+\begin_layout LyX-Code
+ss= 1j*w
+\end_layout
+
+\begin_layout LyX-Code
+hf=lambdify(s,Vo,'numpy')
+\end_layout
+
+\begin_layout LyX-Code
+v=hf(ss)
+\end_layout
+
+\begin_layout LyX-Code
+p.loglog(w,abs(v),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+p.title('Low pass filter')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('$
+\backslash
+omega(rad/s)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$Magnitude$')
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout Subsection
+Unit step response of low pass filter.
+\end_layout
+
+\begin_layout Itemize
+For unit step response since we have H(s) , output Y(s) = H(s)X(s).
+ For unit step X(s) = 1/s.Therefore Y(s)= H(s)/s.
+\end_layout
+
+\begin_layout Itemize
+We can find the corresponding coefficients of Y(s) and give as input to
+ sp.lti function which gives y(t).
+\end_layout
+
+\begin_layout Itemize
+Next we plot output y(t) vs t in figure 2
+\end_layout
+
+\begin_layout LyX-Code
+#unit step response
+\end_layout
+
+\begin_layout LyX-Code
+H=sp.lti([0.1],[6.31517e-12,8.9455e-7,0.0631517,0])
+\end_layout
+
+\begin_layout LyX-Code
+t,x=sp.impulse(H,None,p.linspace(0,0.0001,1001))
+\end_layout
+
+\begin_layout LyX-Code
+p.title('unit step response of low pass filter')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('t')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$V_o(t)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.plot(t,x)
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout Subsection
+Response for sinusoidal input.
+\end_layout
+
+\begin_layout Itemize
+Given input is 
+\begin_inset Formula $v_{i}(t)=sin(2000πt)+cos(2\text{×}106πt)$
+\end_inset
+
+.The h(t) can be calculted from coefficients of H(s) using sp.lti function.
+\end_layout
+
+\begin_layout Itemize
+sp.lsim gives us output by convolving h(t) with input 
+\begin_inset Formula $v_{i}(t)$
+\end_inset
+
+.The plot of response is in figure 3
+\end_layout
+
+\begin_layout LyX-Code
+#for sinusoidal input
+\end_layout
+
+\begin_layout LyX-Code
+H=sp.lti([0.1],[6.31517e-12,8.9455e-7,0.0631517])
+\end_layout
+
+\begin_layout LyX-Code
+t=p.linspace(0.0,1e-2,10001)
+\end_layout
+
+\begin_layout LyX-Code
+u=p.sin(2e3*p.pi*t)+p.cos(2e6*p.pi*t)
+\end_layout
+
+\begin_layout LyX-Code
+t,y,svec=sp.lsim(H,u,t)
+\end_layout
+
+\begin_layout LyX-Code
+p.title('response of low pass filter for sinusoidal input')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('t')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$V_o(t)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.plot(t,y)
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout Subsection
+Plots and discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Magnitude response of first order low pass filter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_1.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unit step response of Low pass filter 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_2.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Response of filter for sinusoidal input with two frequencies 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_3.png
+	width 80page%
+	height 40theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+From figure 1 the frequencies greater than 
+\begin_inset Formula $10^{5}$
+\end_inset
+
+rad/s are attenuated by filter.The lower frequencies are passed with gain
+ of 1.58.The transfer function of this second order filter 
+\begin_inset Formula $\frac{0.1}{6.31517e^{-12}s^{2}+8.9455e^{-7}s+0.06315}$
+\end_inset
+
+ clearly dc gain is 1.58 when we put s=0.It is second order low pass filter
+ with cutoff close to 
+\begin_inset Formula $10^{5}$
+\end_inset
+
+rad/s.These filters are butterworth filters as they are maximally flat with
+ quality factor close to 
+\begin_inset Formula $\frac{1}{\sqrt{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+From figure 2 ,since system has damping factor close to 
+\begin_inset Formula $\frac{1}{\sqrt{2}}$
+\end_inset
+
+ ,it is underdamped system therefore the response to unit step peaks and
+ then settles to 1.58(dc gain).
+\end_layout
+
+\begin_layout Itemize
+From figure 3 since input has two frequencies 
+\begin_inset Formula $2\pi e^{3}$
+\end_inset
+
+and 
+\begin_inset Formula $2\pi e^{6}$
+\end_inset
+
+rad/s and our system has cutooff close to 
+\begin_inset Formula $10^{5}$
+\end_inset
+
+rad/s.
+ The higher frequency is filtered and response will be sinusoid of lower
+ frequency with ripples on it.
+\end_layout
+
+\begin_layout Section
+High pass filter
+\end_layout
+
+\begin_layout Subsection
+Writing the nodal equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\begin{array}{cccc}
+0 & 0 & 1 & \frac{-1}{G}\\
+\frac{-1}{1+\frac{1}{sC_{2}R_{2}}} & 1 & 0 & 0\\
+0 & 1000 & -1000 & 1\\
+sC_{1}-sC_{2}-\frac{1}{R_{1}} & sC_{2} & 0 & \frac{1}{R_{1}}
+\end{array}\right)\left(\begin{array}{c}
+V_{1}\\
+V_{P}\\
+V_{m}\\
+V_{0}
+\end{array}\right)=\left(\begin{array}{c}
+0\\
+0\\
+0\\
+-V_{i}(s)sC_{1}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The transfer of the system 
+\begin_inset Formula $\frac{V_{o}(s)}{V_{i}(s)}$
+\end_inset
+
+ comes from solving for x in Ax=b ie x = inv(A).b
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V_{o}(s)$
+\end_inset
+
+ is in x[3].
+\end_layout
+
+\begin_layout Itemize
+For calculating impulse response of system we give 
+\begin_inset Formula $V_{i}(s)=1$
+\end_inset
+
+ and for step response of system we give 
+\begin_inset Formula $V_{i}(s)=\frac{1}{s}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Itemize
+Sympy helps in defining matrix with symbols.
+ inv function calculates inverse of matrix.The lambdify takes 
+\begin_inset Formula $V_{o}(s)$
+\end_inset
+
+ and converts it into a python function.
+\end_layout
+
+\begin_layout LyX-Code
+def highpass(R1,R2,C1,C2,G,Vi):
+\end_layout
+
+\begin_layout LyX-Code
+    A=Matrix([[0,0,1.0,-1.0/G],[-1.0/(1.0+1.0/(s*R2*C2)),1.0,0,0],
+\end_layout
+
+\begin_layout LyX-Code
+    [0,1000.0,-1000.0,1.0],[-1.0/R1-s*C1-s*C2,s*C2,0,1.0/R1]])
+\end_layout
+
+\begin_layout LyX-Code
+    b=Matrix([0,0,0,-Vi*s*C1])
+\end_layout
+
+\begin_layout LyX-Code
+    V=A.inv()*b
+\end_layout
+
+\begin_layout LyX-Code
+    return (A,b,V)
+\end_layout
+
+\begin_layout Subsection
+Plot magnitude response
+\end_layout
+
+\begin_layout Itemize
+we define range of w for which magnitude response to be calculated using
+ logspace.
+\end_layout
+
+\begin_layout Itemize
+Since we have transfer function as function of s.
+ For bode plot we put s=jw.The corresponding plot is in figure 4
+\end_layout
+
+\begin_layout LyX-Code
+A,b,V=highpass(10000.0,10000.0,1e-9,1e-9,1.586,1.0)
+\end_layout
+
+\begin_layout LyX-Code
+Vo=V[3]
+\end_layout
+
+\begin_layout LyX-Code
+print simplify(Vo)
+\end_layout
+
+\begin_layout LyX-Code
+w=p.logspace(0,8,801)
+\end_layout
+
+\begin_layout LyX-Code
+ss= 1j*w
+\end_layout
+
+\begin_layout LyX-Code
+hf=lambdify(s,Vo,'numpy')
+\end_layout
+
+\begin_layout LyX-Code
+v=hf(ss)
+\end_layout
+
+\begin_layout LyX-Code
+p.loglog(w,abs(v),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+p.title('High pass filter')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('$
+\backslash
+omega(rad/s)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$Magnitude$')
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout Subsection
+Unit step response of low pass filter.
+\end_layout
+
+\begin_layout Itemize
+For unit step response since we have H(s) , output Y(s) = H(s)X(s).
+ For unit step X(s) = 1/s.Therefore Y(s)= H(s)/s.
+\end_layout
+
+\begin_layout Itemize
+We can find the corresponding coefficients of Y(s) and give as input to
+ sp.lti function which gives y(t).
+\end_layout
+
+\begin_layout Itemize
+Next we plot output y(t) vs t in figure 5
+\end_layout
+
+\begin_layout LyX-Code
+#unit step response
+\end_layout
+
+\begin_layout LyX-Code
+H=sp.lti([1e-9,0],[6.2951e-10,8.885e-5,6.29517])
+\end_layout
+
+\begin_layout LyX-Code
+t,x=sp.impulse(H,None,p.linspace(0,0.0001,1001))
+\end_layout
+
+\begin_layout LyX-Code
+p.title('unit step response of high pass filter')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('t')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$V_o(t)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.plot(t,x)
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout Subsection
+Response for sinusoidal input.
+\end_layout
+
+\begin_layout Itemize
+Let input be 
+\begin_inset Formula $V_{i}(t)=exp(-1e^{4}t)cos(2e^{5}\pi t)$
+\end_inset
+
+.The h(t) can be calculted from coefficients of H(s) using sp.lti function.
+\end_layout
+
+\begin_layout Itemize
+sp.lsim gives us output by convolving h(t) with input 
+\begin_inset Formula $v_{i}(t)$
+\end_inset
+
+.The plot of response is in figure 6
+\end_layout
+
+\begin_layout LyX-Code
+#for sinusoidal input
+\end_layout
+
+\begin_layout LyX-Code
+H=sp.lti([1e-9,0,0],[6.2951e-10,8.885e-5,6.29517])
+\end_layout
+
+\begin_layout LyX-Code
+t=p.linspace(0,5e-4,1001)
+\end_layout
+
+\begin_layout LyX-Code
+u=p.exp(-1e4*t)*p.cos(2e5*p.pi*t)
+\end_layout
+
+\begin_layout LyX-Code
+t,y,svec=sp.lsim(H,u,t)
+\end_layout
+
+\begin_layout LyX-Code
+p.title('response of high pass filter for damped sinusoidal input')
+\end_layout
+
+\begin_layout LyX-Code
+p.xlabel('t')
+\end_layout
+
+\begin_layout LyX-Code
+p.ylabel('$V_o(t)$')
+\end_layout
+
+\begin_layout LyX-Code
+p.plot(t,y)
+\end_layout
+
+\begin_layout LyX-Code
+p.grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+p.show()
+\end_layout
+
+\begin_layout Subsection
+Plots and discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Magnitude response of High Pass filter
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_4.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unit step response of High pass filter 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_5.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Response of filter for damped sinusoid input 
+\begin_inset Formula $V_{i}(t)=exp(-1e^{4}t)cos(2e^{5}\pi t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_6.png
+	width 80page%
+	height 40theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+From figure 4, it is high pass since it filters out low frequencies.
+ It allow frequencies greater than 
+\begin_inset Formula $10^{5}$
+\end_inset
+
+ with gain of 1.58.The transfer function of second order filter is 
+\begin_inset Formula $\frac{1e-9s^{2}}{6.2951e^{-10}s^{2}+8.885e^{-5}s+6.29517}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+From figure 5, The output to step response is exactly inverted to that of
+ low pass filter.The output starts from high value and decays to zero with
+ a minimum peak as t increases which is expected because in steady state
+ since input is dc and high pass filters out dc, output should be zero.
+\end_layout
+
+\begin_layout Itemize
+From figure 6, The filter passes out input damped sinusoid as cutoff is
+ less than input frequency but since it decays with time .
+ The output is decaying sinusoid.
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_body
+\end_document

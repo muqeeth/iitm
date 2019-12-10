@@ -1,0 +1,951 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+The Digital Fourier Transform
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+This report explains how to obtain discrete fourier transform using pylab
+ library and generate spectrum of functions.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Itemize
+Python has two commands in pylab library fft() to compute the forward fourier
+ transform,ifft() to compute inverse.
+\end_layout
+
+\begin_layout LyX-Code
+numpy.fft.fft()
+\end_layout
+
+\begin_layout LyX-Code
+numpy.fft.ifft()
+\end_layout
+
+\begin_layout Itemize
+fftshift command helps us in shifting frequency axis to represent negative
+ frequencies.
+\begin_inset Formula 
+\[
+sin(5t)=\frac{e^{j5t}-e^{-j5t}}{2j}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Y(f)=\frac{1}{2j}(\delta(f-5)-\delta(f+5))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the spectrum of 
+\begin_inset Formula $sin(5t)$
+\end_inset
+
+ the deltas should be at 5 and -5, with amplitudes of 0.5.The phase at 5 should
+ be -
+\begin_inset Formula $\pi/2$
+\end_inset
+
+ and phase at -5 should be 
+\begin_inset Formula $\pi/2$
+\end_inset
+
+.
+ These can be seen in below graph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectrum of 
+\begin_inset Formula $sin(5t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_6.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Amplitude modulation can also generate a spectrum.
+ Let us consider 
+\begin_inset Formula $f(t)=(1+0.1cos(t))cos(10t)$
+\end_inset
+
+ Here we do this using tighther spacing between frequencies.
+\end_layout
+
+\begin_layout LyX-Code
+t=linspace(-4*pi,4*pi,513);t=t[:-1]
+\end_layout
+
+\begin_layout Itemize
+It generates spikes at 9,10,11 rad/s.
+\begin_inset Formula 
+\[
+0.1cos(t)cos(10t)=0.05(cos(11t)+cos(9t))=0.025(e^{11tj}+e^{9tj}+e^{-11tj}+e^{-9tj})
+\]
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+spectrum of 
+\begin_inset Formula $f(t)=(1+0.1cos(t))cos(10t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_8.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Spectrum of 
+\begin_inset Formula $sin^{3}x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y=sin^{3}(x)=\frac{3sinx-sin3x}{4}=\frac{3e^{jx}-3e^{-jx}-e^{-3jx}+e^{3jx}}{8j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The expected spectrum is 
+\begin_inset Formula 
+\[
+Y(f)=\frac{3}{8j}\left[\delta(f-1)-\delta(f+1)\right]-\frac{1}{8j}\left[\delta(f-3)-\delta(f+3)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+#sin^3t spectrum
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(0,2*pi,129)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+y=pow(sin(x),3)
+\end_layout
+
+\begin_layout LyX-Code
+Y=fftshift(fft(y))/128.0
+\end_layout
+
+\begin_layout LyX-Code
+w=linspace(-64,63,128)
+\end_layout
+
+\begin_layout LyX-Code
+figure()
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,1)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-10,10])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"$|Y|$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+title(r"Spectrum of $
+\backslash
+sin^3(t)$")
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,2)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),'ro',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+ii=where(abs(Y)>1e-3)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w[ii],angle(Y[ii]),'go',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-10,10])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+xlabel(r"$k$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectrum of 
+\begin_inset Formula $sin^{3}t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_1.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+From graph the spikes are at 1,-1,3,-3.The height at 1,-1 & 3,-3 are 0.375
+ and 0.125 respectively.The peaks at 1,-3 has phase of 
+\begin_inset Formula $-\pi/2$
+\end_inset
+
+ because they have j in the denominator .
+ The peaks at -1,3 has phase of 
+\begin_inset Formula $\pi/2$
+\end_inset
+
+ because they have -1/j as their multiplying factor.
+\end_layout
+
+\begin_layout Section
+Spectrum of 
+\begin_inset Formula $cos^{3}x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y=cos^{3}(x)=\frac{3cosx+cos3x}{4}=\frac{3e^{jx}+3e^{-jx}+e^{3jx}+e^{-3jx}}{8j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The expected spectrum is 
+\begin_inset Formula 
+\[
+Y(f)=\frac{3}{8j}\left[\delta(f-1)+\delta(f+1)\right]+\frac{1}{8j}\left[\delta(f-3)+\delta(f+3)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+# #cos^3t spectrum
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(0,2*pi,129)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+y=pow(cos(x),3)
+\end_layout
+
+\begin_layout LyX-Code
+Y=fftshift(fft(y))/128.0
+\end_layout
+
+\begin_layout LyX-Code
+w=linspace(-64,63,128)
+\end_layout
+
+\begin_layout LyX-Code
+figure()
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,1)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-10,10])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"$|Y|$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+title(r"Spectrum of $
+\backslash
+cos^3(t)$")
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,2)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),'ro',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+ii=where(abs(Y)>1e-3)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w[ii],angle(Y[ii]),'go',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-10,10])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+xlabel(r"$k$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectrum of 
+\begin_inset Formula $sin^{3}t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_2.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+From graph the spikes are at 1,-1,3,-3.The height at 1,-1 & 3,-3 are 0.375
+ and 0.125 respectively.The peaks has 
+\begin_inset Formula $\pi/2$
+\end_inset
+
+ as phase since they have j in the denominator.
+\end_layout
+
+\begin_layout Section
+Spectrum of 
+\begin_inset Formula $cos(20x+5cosx)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $cos(20x+5cosx)$
+\end_inset
+
+ function is peroidic so the spectrum consits of deltas.It is phase modulation
+ of a signal.
+\end_layout
+
+\begin_layout Itemize
+The phase is plot only where magnitude is greater than 
+\begin_inset Formula $10^{-3}.$
+\end_inset
+
+The magnitude plot is symmetric where as phase of those deltas are inverted
+ ie if postive frequencies have phase of 
+\begin_inset Formula $\phi$
+\end_inset
+
+then negative frequencies have phase of 
+\begin_inset Formula $-\phi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(-4*pi,4*pi,513)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+y=cos(20*x+5*cos(x)) 
+\end_layout
+
+\begin_layout LyX-Code
+Y=fftshift(fft(y))/512.0
+\end_layout
+
+\begin_layout LyX-Code
+w=linspace(-64,64,513)
+\end_layout
+
+\begin_layout LyX-Code
+w=w[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+figure()
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,1)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-30,30])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"$|Y|$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+title(r"Spectrum of $
+\backslash
+cos(20t+5cos(t))$")
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,2)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,angle(Y),'ro',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+ii=where(abs(Y)>1e-3)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w[ii],angle(Y[ii]),'go',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-30,30])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+xlabel(r"$k$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+spectrum of 
+\begin_inset Formula $cos(20t+5cost)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_3.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Spectrum of 
+\begin_inset Formula $exp(\frac{-x^{2}}{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $exp(\frac{-x^{2}}{2})$
+\end_inset
+
+is not a peroidic function.
+ we take fourier inverse of it and take all those frequencies where magnitude
+ of Y(f) is greater than 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+.It makes signal band limited to frequency of 
+\end_layout
+
+\begin_layout Itemize
+For nyquist criteria to hold we should sample at twice the above frequency.
+ so the t is sampled at 
+\begin_inset Formula $512/8\pi$
+\end_inset
+
+frequency ,which is higher than 
+\end_layout
+
+\begin_layout Itemize
+fftshift is done for input signal so that it results in phase of zero.
+\end_layout
+
+\begin_layout LyX-Code
+x=linspace(-4*pi,4*pi,513)
+\end_layout
+
+\begin_layout LyX-Code
+x=x[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+y=exp(-(x*x)/2.0)
+\end_layout
+
+\begin_layout LyX-Code
+Y=fftshift(fft(fftshift(y)))*8*pi/512.0
+\end_layout
+
+\begin_layout LyX-Code
+w=linspace(-64,64,513)
+\end_layout
+
+\begin_layout LyX-Code
+w=w[:-1]
+\end_layout
+
+\begin_layout LyX-Code
+figure()
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,1)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,abs(Y),lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-30,30])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"$|Y|$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+title(r"Spectrum of $
+\backslash
+exp(-t^2/2)$")
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+subplot(2,1,2)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w,angle(Y),'ro',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+ii=where(abs(Y)>1e-6)
+\end_layout
+
+\begin_layout LyX-Code
+plot(w[ii],angle(Y[ii]),'go',lw=2)
+\end_layout
+
+\begin_layout LyX-Code
+xlim([-30,30])
+\end_layout
+
+\begin_layout LyX-Code
+ylabel(r"Phase of $Y$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+xlabel(r"$k$",size=16)
+\end_layout
+
+\begin_layout LyX-Code
+grid(True)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Spectrum of 
+\begin_inset Formula $exp(\frac{-x^{2}}{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Figure_4.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

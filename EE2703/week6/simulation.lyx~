@@ -1,0 +1,1351 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Tube Light Model Simulation
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+In this report we present simulations done in python.We take tube light model
+ as problem statement to simulate light intensity as function of position
+ and plot electron phase space for each electron.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Itemize
+We consider 1D tube light with uniform electric field from anode to cathode.
+ For each time step an average of 5 electrons are introduced at cathode.These
+ electrons accelerate in presence of electric field.
+\end_layout
+
+\begin_layout Itemize
+The accelerated electrons which when reach the threshold energy collide
+ with atoms and excite them.The excited atoms come to ground state by emmitting
+ photons.The collision is taken as perfectly inelastic.The relaxation time
+ for excited atoms is taken as zero ie they emit photons as soon as collision
+ occurs.
+\end_layout
+
+\begin_layout Itemize
+The electrons reaching the anode gets destroyed.The actual number of electrons
+ introduced for each time step is a random number which is normally distributed
+ with standard deviation of 2 and mean 5.
+\end_layout
+
+\begin_layout Itemize
+The position of collided electron is assumed to be uniformly distributed.The
+ total number of time steps for simulation is 500.
+\end_layout
+
+\begin_layout Itemize
+Simulation returns three lists namely Intensity of emitted light 
+\begin_inset Formula $I$
+\end_inset
+
+,Electron position 
+\begin_inset Formula $X$
+\end_inset
+
+,Electron velocity 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ 
+\begin_inset Formula $I,X,V$
+\end_inset
+
+ record emitted light,electrons postion,electrons velocity for each time
+ step.
+\end_layout
+
+\begin_layout Itemize
+Next we plot Intensity,Electron density using 
+\begin_inset Formula $hist$
+\end_inset
+
+ function in python.
+\end_layout
+
+\begin_layout Section
+Method
+\end_layout
+
+\begin_layout Subsection
+Import Packages
+\end_layout
+
+\begin_layout Itemize
+we import pylab,matplotlib,sys,numpy packages for this simulation.The python
+ code to import them is below
+\end_layout
+
+\begin_layout LyX-Code
+#import packages
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+from matplotlib import *
+\end_layout
+
+\begin_layout LyX-Code
+import sys
+\end_layout
+
+\begin_layout Subsection
+User input
+\end_layout
+
+\begin_layout Itemize
+We use sys.agrv to take user inputs.
+ If user does not provide input default values defined in the program are
+ taken.sys.agrv returns a list with arguments passed through terminal from
+ second index.
+\end_layout
+
+\begin_layout Itemize
+The variable 
+\begin_inset Formula $p$
+\end_inset
+
+ below is probability that collision results in ionisation of atoms for
+ light emission.
+ 
+\end_layout
+
+\begin_layout Itemize
+The standard deviation is taken as 
+\begin_inset Formula $Msig=2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+#user input using sys.argv
+\end_layout
+
+\begin_layout LyX-Code
+try:
+\end_layout
+
+\begin_layout LyX-Code
+    n = int(sys.argv[1])
+\end_layout
+
+\begin_layout LyX-Code
+    M = int(sys.argv[2])
+\end_layout
+
+\begin_layout LyX-Code
+    nk = int(sys.argv[3])
+\end_layout
+
+\begin_layout LyX-Code
+    u0 = int(sys.argv[4])
+\end_layout
+
+\begin_layout LyX-Code
+    p = float(sys.argv[5])
+\end_layout
+
+\begin_layout LyX-Code
+except:
+\end_layout
+
+\begin_layout LyX-Code
+    n=100 # spatial grid size.
+\end_layout
+
+\begin_layout LyX-Code
+    M=5 # number of electrons injected per turn.
+\end_layout
+
+\begin_layout LyX-Code
+    nk=500 # number of turns to simulate.
+\end_layout
+
+\begin_layout LyX-Code
+    u0=7 # threshold velocity.
+\end_layout
+
+\begin_layout LyX-Code
+    p=0.5 # probability that ionization will occur
+\end_layout
+
+\begin_layout LyX-Code
+Msig=2#standard deviation
+\end_layout
+
+\begin_layout Subsection
+Create vectors to hold electron information.Define vectors to accumulate
+ simulation data.
+\end_layout
+
+\begin_layout Itemize
+Three vectors Electron position 
+\begin_inset Formula $xx$
+\end_inset
+
+,Electron velocity 
+\begin_inset Formula $u$
+\end_inset
+
+,Electron displacement in each time step 
+\begin_inset Formula $dx$
+\end_inset
+
+ are defined of length n*M to store information in each turn
+\end_layout
+
+\begin_layout Itemize
+The information from simulation is stored in lists defined as Intensity
+ of emitted light 
+\begin_inset Formula $I$
+\end_inset
+
+,Electron position 
+\begin_inset Formula $X$
+\end_inset
+
+,Electron velocity 
+\begin_inset Formula $V$
+\end_inset
+
+ for every time step.They are defined as lists because their size gets extended
+ in every time step.
+\end_layout
+
+\begin_layout Itemize
+The variable m1 is defined to hold number of electrons introduced till the
+ current injection of electrons.This helps to place incoming electrons in
+ position greater than m1 for xx list.
+\end_layout
+
+\begin_layout Itemize
+The tube light length is taken to be of size 100.The position of electron
+ from 1 to 100 represents state inside tubelight .
+ The position 0 of electron means not injected.The position greater than
+ or equal to 100 represents electron reaching anode and absorbed.
+\end_layout
+
+\begin_layout LyX-Code
+#Create vectors to hold the electron information
+\end_layout
+
+\begin_layout LyX-Code
+xx = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+u = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+dx = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+#information from simulation
+\end_layout
+
+\begin_layout LyX-Code
+I = []#Intensity of emitted light
+\end_layout
+
+\begin_layout LyX-Code
+X = []#Electron position
+\end_layout
+
+\begin_layout LyX-Code
+V = []#Electron velocity
+\end_layout
+
+\begin_layout LyX-Code
+m1 = 0#keep track of number of electrons introduced till loop start again
+\end_layout
+
+\begin_layout Subsection
+The Main iteration loop
+\end_layout
+
+\begin_layout Itemize
+Find electrons present inside tube light using 
+\begin_inset Formula $where$
+\end_inset
+
+ command.Assuming the acceleration caused by unifrom electric field as 1,
+ the displacement of 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+electron is calculated using kinematic equations.
+\begin_inset Formula 
+\[
+dx_{i}=u_{i}\triangle t+\frac{1}{2}a(\triangle t)^{2}=u_{i}+0.5
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+v_{i}=u_{i}+a\triangle t=u_{i}+1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The postion of electron of electron is added with 
+\begin_inset Formula $dx_{i}$
+\end_inset
+
+and velocity is increased by 1.
+\begin_inset Formula 
+\[
+x_{i}\leftarrow x_{i}+dx_{i}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{i}\leftarrow u_{i}+1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The particles whose positions are greater than or equal to 100 have hit
+ anode their position are reset to 0.
+\end_layout
+
+\begin_layout Itemize
+Since electron accelerates it may reach threshold energy.Those electrons
+ with energy greater or equal to threshold if collided with atoms and resulted
+ in ionisation will lose velocity to zero.
+\end_layout
+
+\begin_layout Itemize
+The displacement of those collided electron of number len(kl) are calculated
+ as:
+\begin_inset Formula 
+\[
+dt=rand(len(kl))
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+dx=u_{i}*dt+0.5*dt*dt
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+v_{i}=0+1*(1-dt)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x_{i}\leftarrow x_{i}+dx_{i}+0.5*(1-dt)*(1-dt)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The positions where energised electrons collisions occur are added to list
+ I.These positions would represent positions where light is emitted.
+\end_layout
+
+\begin_layout Itemize
+The injection of electrons is done by a normally distributed number with
+ mean 5 and standard deviation 2 as follows
+\begin_inset Formula 
+\[
+m=int(randn()*Msig+M)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The injected electrons are placed in xx where it has zero value.
+\end_layout
+
+\begin_layout Itemize
+This is done under a for loop for 500 iterations.Again find all the existing
+ electrons.Add their positions and velocities to the X and V vectors.
+\end_layout
+
+\begin_layout LyX-Code
+#loop begins 
+\end_layout
+
+\begin_layout LyX-Code
+for k in range(1,nk+1):
+\end_layout
+
+\begin_layout LyX-Code
+    ii = where(xx>0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    dx[ii] = u[ii] + 0.5
+\end_layout
+
+\begin_layout LyX-Code
+    xx[ii] = xx[ii] + dx[ii]
+\end_layout
+
+\begin_layout LyX-Code
+    u[ii] = u[ii] + 1 
+\end_layout
+
+\begin_layout LyX-Code
+    #set position velocity of elec which reach anode
+\end_layout
+
+\begin_layout LyX-Code
+    jj = where(xx>=n)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    u[jj] = 0
+\end_layout
+
+\begin_layout LyX-Code
+    xx[jj] = 0
+\end_layout
+
+\begin_layout LyX-Code
+    dx[jj] =0
+\end_layout
+
+\begin_layout LyX-Code
+    #those elec whose energy>threshold
+\end_layout
+
+\begin_layout LyX-Code
+    kk = where(u>=u0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    ll = where(rand(len(kk))<=p)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    kl = kk[ll]
+\end_layout
+
+\begin_layout LyX-Code
+    xx[kl]=xx[kl]-dx[kl]
+\end_layout
+
+\begin_layout LyX-Code
+    u[kl]=u[kl]-1
+\end_layout
+
+\begin_layout LyX-Code
+    dt = rand(len(kl))
+\end_layout
+
+\begin_layout LyX-Code
+    dx[kl] = u[kl]*dt + 0.5*dt*dt
+\end_layout
+
+\begin_layout LyX-Code
+    xx[kl] =xx[kl]+dx[kl]+0.5*(1-dt)*(1-dt)
+\end_layout
+
+\begin_layout LyX-Code
+    u[kl]=1-dt
+\end_layout
+
+\begin_layout LyX-Code
+    I.extend(xx[kl].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    m=int(randn()*Msig+M)
+\end_layout
+
+\begin_layout LyX-Code
+    pp = where(xx>0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    X.extend(xx[pp].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    V.extend(u[pp].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    m1 = where(xx==0)[0]    
+\end_layout
+
+\begin_layout LyX-Code
+    y=m1[0:m]
+\end_layout
+
+\begin_layout LyX-Code
+    xx[y]=1
+\end_layout
+
+\begin_layout Subsection
+Plots and data analysis.
+\end_layout
+
+\begin_layout Itemize
+we use hist function to plot Intensity of emitted light I, electron density
+ X.
+\end_layout
+
+\begin_layout Itemize
+The hist function returns a tuple of three elements.
+ First one is an array of population count and second one is bin position.The
+ second one gives dividing positons between bins.
+ So to make its dimension equal to that of population count we take mid
+ values of each bin.
+\end_layout
+
+\begin_layout Itemize
+The data obtained is tabulated .
+\end_layout
+
+\begin_layout Itemize
+For electron phase space we plot vector X vs vector V.This essentially plots
+ position 
+\begin_inset Formula $x=x_{i}$
+\end_inset
+
+and velocity 
+\begin_inset Formula $v=v_{i}$
+\end_inset
+
+ for each electron for all time steps.
+\end_layout
+
+\begin_layout LyX-Code
+title('Emission Intensity')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('I') 
+\end_layout
+
+\begin_layout LyX-Code
+hist(I,100,normed=1,color='white')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+title('Electron density')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('Number of electrons that cross x')
+\end_layout
+
+\begin_layout LyX-Code
+hist(X,100,color='white')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+title('Electron phase space')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('v')
+\end_layout
+
+\begin_layout LyX-Code
+plot(X,V,'ro',markersize=4)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+population_count=hist(I,100)[0]
+\end_layout
+
+\begin_layout LyX-Code
+bins = hist(I,100)[1]
+\end_layout
+
+\begin_layout LyX-Code
+xpos= 0.5*(bins[0:-1]+bins[1:])
+\end_layout
+
+\begin_layout LyX-Code
+for x in range(len(xpos)):
+\end_layout
+
+\begin_layout LyX-Code
+    print "%f  %d
+\backslash
+n" %(xpos[x],population_count[x])
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Emission Intensity for u0=7
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_1.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Electron Phase Space
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_2.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Emission Intensity for u0=5
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_3.png
+	width 80page%
+	height 40theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Electron density
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_4.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results and Discussion
+\end_layout
+
+\begin_layout Itemize
+From figure 1, which is for u0 = 7 and p = 0.5 the conclusion are:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+There is no emission of light before x = 20 because accelerate along this
+ distance to reach threshold velocity.
+\end_layout
+
+\begin_layout Itemize
+The peak value of intensity is at x=20,the second peak is at x between 40
+ to 50.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+From figure 2,we get to know that for an x value only discrete v values
+ are possible.
+\end_layout
+
+\begin_layout Itemize
+From figure3, which is for u0=5 and p = 0.5,the conclusions are:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+As u0 value changes which can be assumed as changing gas in tube light we
+ can have simulations for different gases in tube light.
+\end_layout
+
+\begin_layout Itemize
+There is no emssion of light before x=8.i.e electrons travels a distance of
+ 8 to reach threshold velocity.
+\end_layout
+
+\begin_layout Itemize
+The peak intensity occurs near x=8.Near edge of tube light intensity does
+ vary much.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+From figure 4 we conclude that more electrons cross region near to cathode.Near
+ anode the number of electrons passing remain uniform.
+\end_layout
+
+\begin_layout Itemize
+The above discussion is for assuming electrons are uniformly distributed
+ in space
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Emission intensity
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_8.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Electron density
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_9.png
+	width 80page%
+	height 40theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Electron phase space
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_10.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The electron phase clearly varies if we assume time is unifromly distributed
+ but not space .
+ It is shown in figure 7 which differs from figure 2.
+\end_layout
+
+\begin_layout Section
+Code:
+\end_layout
+
+\begin_layout LyX-Code
+#import packages
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+from matplotlib import *
+\end_layout
+
+\begin_layout LyX-Code
+import sys
+\end_layout
+
+\begin_layout LyX-Code
+#user input using sys.argv
+\end_layout
+
+\begin_layout LyX-Code
+try:
+\end_layout
+
+\begin_layout LyX-Code
+    n = int(sys.argv[1])
+\end_layout
+
+\begin_layout LyX-Code
+    M = int(sys.argv[2])
+\end_layout
+
+\begin_layout LyX-Code
+    nk = int(sys.argv[3])
+\end_layout
+
+\begin_layout LyX-Code
+    u0 = int(sys.argv[4])
+\end_layout
+
+\begin_layout LyX-Code
+    p = float(sys.argv[5])
+\end_layout
+
+\begin_layout LyX-Code
+except:
+\end_layout
+
+\begin_layout LyX-Code
+    n=100 # spatial grid size.
+\end_layout
+
+\begin_layout LyX-Code
+    M=5 # number of electrons injected per turn.
+\end_layout
+
+\begin_layout LyX-Code
+    nk=500 # number of turns to simulate.
+\end_layout
+
+\begin_layout LyX-Code
+    u0=7 # threshold velocity.
+\end_layout
+
+\begin_layout LyX-Code
+    p=0.5 # probability that ionization will occur
+\end_layout
+
+\begin_layout LyX-Code
+Msig=2#standard deviation
+\end_layout
+
+\begin_layout LyX-Code
+#Create vectors to hold the electron information
+\end_layout
+
+\begin_layout LyX-Code
+xx = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+u = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+dx = zeros((n*M))
+\end_layout
+
+\begin_layout LyX-Code
+#information from simulation
+\end_layout
+
+\begin_layout LyX-Code
+I = []#Intensity of emitted light
+\end_layout
+
+\begin_layout LyX-Code
+X = []#Electron position
+\end_layout
+
+\begin_layout LyX-Code
+V = []#Electron velocity
+\end_layout
+
+\begin_layout LyX-Code
+#loop begins 
+\end_layout
+
+\begin_layout LyX-Code
+for k in range(1,nk+1):
+\end_layout
+
+\begin_layout LyX-Code
+    ii = where(xx>0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    dx[ii] = u[ii] + 0.5
+\end_layout
+
+\begin_layout LyX-Code
+    xx[ii] = xx[ii] + dx[ii]
+\end_layout
+
+\begin_layout LyX-Code
+    u[ii] = u[ii] + 1 
+\end_layout
+
+\begin_layout LyX-Code
+    #set position velocity of elec which reach anode
+\end_layout
+
+\begin_layout LyX-Code
+    jj = where(xx>=n)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    u[jj] = 0
+\end_layout
+
+\begin_layout LyX-Code
+    xx[jj] = 0
+\end_layout
+
+\begin_layout LyX-Code
+    dx[jj] =0
+\end_layout
+
+\begin_layout LyX-Code
+    #those elec whose energy>threshold
+\end_layout
+
+\begin_layout LyX-Code
+    kk = where(u>=u0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    ll = where(rand(len(kk))<=p)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    kl = kk[ll]
+\end_layout
+
+\begin_layout LyX-Code
+    xx[kl]=xx[kl]-dx[kl]
+\end_layout
+
+\begin_layout LyX-Code
+    u[kl]=u[kl]-1
+\end_layout
+
+\begin_layout LyX-Code
+    dt = rand(len(kl))
+\end_layout
+
+\begin_layout LyX-Code
+    dx[kl] = u[kl]*dt + 0.5*dt*dt
+\end_layout
+
+\begin_layout LyX-Code
+    xx[kl] =xx[kl]+dx[kl]+0.5*(1-dt)*(1-dt)
+\end_layout
+
+\begin_layout LyX-Code
+    u[kl]=1-dt
+\end_layout
+
+\begin_layout LyX-Code
+    I.extend(xx[kl].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    m=int(randn()*Msig+M)
+\end_layout
+
+\begin_layout LyX-Code
+    pp = where(xx>0)[0]
+\end_layout
+
+\begin_layout LyX-Code
+    X.extend(xx[pp].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    V.extend(u[pp].tolist())
+\end_layout
+
+\begin_layout LyX-Code
+    m1 = where(xx==0)[0]    
+\end_layout
+
+\begin_layout LyX-Code
+    y=m1[0:min(len(m1),m)]
+\end_layout
+
+\begin_layout LyX-Code
+    xx[y]=1
+\end_layout
+
+\begin_layout LyX-Code
+title('Emission Intensity')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('I') 
+\end_layout
+
+\begin_layout LyX-Code
+hist(I,100,normed=1,color='white')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+title('Electron density')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('Number of electrons that cross x')
+\end_layout
+
+\begin_layout LyX-Code
+hist(X,100,color='white')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+title('Electron phase space')
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('x')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('v')
+\end_layout
+
+\begin_layout LyX-Code
+plot(X,V,'ro',markersize=4)
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout LyX-Code
+population_count=hist(I,100)[0]
+\end_layout
+
+\begin_layout LyX-Code
+bins = hist(I,100)[1]
+\end_layout
+
+\begin_layout LyX-Code
+xpos= 0.5*(bins[0:-1]+bins[1:])
+\end_layout
+
+\begin_layout LyX-Code
+for x in range(len(xpos)):
+\end_layout
+
+\begin_layout LyX-Code
+    print "%f  %d
+\backslash
+n" %(xpos[x],population_count[x])
+\end_layout
+
+\begin_layout Section
+Note:
+\end_layout
+
+\begin_layout Itemize
+simulation.py is done assuming space is uniformly distributed.simulation2.py
+ is done assuming only time is uniformly distributed.
+\end_layout
+
+\end_body
+\end_document

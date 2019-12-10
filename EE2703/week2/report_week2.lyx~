@@ -1,0 +1,676 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Vector Operations and Functions in Python
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering
+\end_layout
+
+\begin_layout Abstract
+This report presents how to plot graph of a function, compute integral using
+ quad function and trapezoidal algorithm and their corresponding error calculati
+ons.
+\end_layout
+
+\begin_layout Section
+define a function to take a vector argument
+\end_layout
+
+\begin_layout Itemize
+Take vector as argument
+\end_layout
+
+\begin_layout Itemize
+Return 
+\begin_inset Formula $1/1+t^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q1.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+output:
+\end_layout
+
+\begin_layout Standard
+[ 1.
+ 0.99009901 0.96153846 0.91743119 0.86206897 0.8 0.73529412 0.67114094 0.6097561
+ 0.55248619 0.5 0.45248869 0.40983607 0.37174721 0.33783784 0.30769231 0.28089888
+ 0.25706941 0.23584906 0.21691974 0.2 0.18484288 0.17123288 0.15898251 0.14792899
+ 0.13793103 0.12886598 0.12062726 0.11312217 0.10626993 0.1 0.09425071 0.08896797
+ 0.08410429 0.07961783 0.0754717 0.07163324 0.06807352 0.06476684 0.06169031 0.05882353
+ 0.05614823 0.05364807 0.05130836 0.04911591 0.04705882 0.04512635 0.04330879 0.04159734
+ 0.03998401]
+\end_layout
+
+\begin_layout Section
+Define a vector x
+\end_layout
+
+\begin_layout Itemize
+import numpy ,pylab.
+\end_layout
+
+\begin_layout Itemize
+use linspace 
+\end_layout
+
+\begin_layout Standard
+code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q2.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+output:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+[ 0.
+ 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.
+ 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.
+ 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.
+ 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.
+ 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 5.
+ ] 
+\end_layout
+
+\begin_layout Section
+plot f(x) vs x
+\end_layout
+
+\begin_layout Itemize
+define function f(x)
+\end_layout
+
+\begin_layout Itemize
+take input x as vector
+\end_layout
+
+\begin_layout Itemize
+plot f(x) vs x using plot function
+\end_layout
+
+\begin_layout Standard
+code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "q3.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+output:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename figure_1.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+finding 
+\begin_inset Formula $tan^{-1}(x)$
+\end_inset
+
+ using integration and quad function
+\end_layout
+
+\begin_layout Itemize
+for each value of x implement quad function .
+\end_layout
+
+\begin_layout Itemize
+append the return values i.e error and integration values to lists.
+\end_layout
+
+\begin_layout Itemize
+tabulate 
+\begin_inset Formula $tan^{-1}x$
+\end_inset
+
+ and above integration values and plot them.
+\end_layout
+
+\begin_layout Itemize
+plot error values returned by quad function .
+\end_layout
+
+\begin_layout Standard
+code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "vecarg.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+output:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename figure_2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename figure_3.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Trapezoidal algorithm approach for integral
+\end_layout
+
+\begin_layout Itemize
+The integral value between two points by trapezoidal algorithm is calculated
+ by small trapezium areas
+\end_layout
+
+\begin_layout Itemize
+a paticular h is chosed.
+ It is halved for every iteration and exact error , estimated error is calculate
+d
+\end_layout
+
+\begin_layout Itemize
+x ranges form 0 to 1 in steps of h
+\end_layout
+
+\begin_layout Standard
+code:
+\end_layout
+
+\begin_layout Standard
+using cumsum function to implement integral
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "integral2.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+using for loop to implement integrals
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "integral.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand lstinputlisting
+filename "error.py"
+lstparams "breaklines=true,captionpos=b,frame=tb,language=Python"
+
+\end_inset
+
+output:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename figure_4.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results and observations
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+h values
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+estimated values
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+exact values
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00040584368433571605
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00054103142650707703
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.025
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00010139519069252145
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00013518774217136098
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.5373020550945036e-05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.3830294404291195e-05
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00625
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.3429741241627369e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.4572738533461589e-06
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.003125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.585725967423457e-06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.114299729183422e-06
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0015625
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.9643479610163013e-07
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.2857963162011856e-07
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.00078125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.9108631079758425e-08
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3214483551848843e-07
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.000390625
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.4777187523916666e-08
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.30362490696956e-08
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0001953125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.1942947437998441e-09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.259061545778934e-09
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+best approximation of h = 0.0001953125
+\end_layout
+
+\end_body
+\end_document

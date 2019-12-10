@@ -1,0 +1,18 @@
+sudo apt-get install tesseract-ocr
+sudo apt-get install python-pip
+pip install python-xlib
+sudo apt-get install scrot
+sudo apt-get install python-tk
+sudo apt-get install python-dev
+pip install pyautogui
+-To get coordinates of question use xdo tool and fill it in the loco.py
+sudo apt-get install xdotool
+xdotool getmouselocation
+-Teamviewer Installation
+sudo dpkg --add-architecture i386
+sudo apt-get update
+wget https://download.teamviewer.com/download/teamviewer_i386.deb
+sudo dpkg -i teamviewer_i386.deb
+sudo apt update && sudo apt -f install
+-Running Script
+loco.py

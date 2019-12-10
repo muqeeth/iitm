@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+I	../simulation.py	/^I = []#Intensity of emitted light$/;"	kind:variable	line:17
+M	../simulation.py	/^M=5 # number of electrons injected per turn.$/;"	kind:variable	line:6
+Msig	../simulation.py	/^Msig=2#standard deviation$/;"	kind:variable	line:10
+V	../simulation.py	/^V = []#Electron velocity$/;"	kind:variable	line:19
+X	../simulation.py	/^X = []#Electron position$/;"	kind:variable	line:18
+dx	../simulation.py	/^dx = zeros((n*M))$/;"	kind:variable	line:15
+ii	../simulation.py	/^    ii = where(xx>0)[0]$/;"	kind:variable	line:23
+jj	../simulation.py	/^    jj = where(xx[ii]>=n)[0]$/;"	kind:variable	line:28
+kk	../simulation.py	/^    kk = where(u[ii]>=u0)[0]$/;"	kind:variable	line:33
+kl	../simulation.py	/^    kl = kk[ll]$/;"	kind:variable	line:35
+ll	../simulation.py	/^    ll = where(rand(len(kk))<=p)[0]$/;"	kind:variable	line:34
+m	../simulation.py	/^    m=int(randn()*Msig+M)$/;"	kind:variable	line:39
+m1	../simulation.py	/^    m1=m1+m$/;"	kind:variable	line:44
+m1	../simulation.py	/^m1 = 0$/;"	kind:variable	line:21
+n	../simulation.py	/^n=100 # spatial grid size.$/;"	kind:variable	line:5
+nk	../simulation.py	/^nk=500 # number of turns to simulate.$/;"	kind:variable	line:7
+p	../simulation.py	/^p=0.25 # probability that ionization will occur$/;"	kind:variable	line:9
+simulation.py	../simulation.py	1;"	kind:file	line:1
+u	../simulation.py	/^u = zeros((n*M))$/;"	kind:variable	line:14
+u0	../simulation.py	/^u0=5 # threshold velocity.$/;"	kind:variable	line:8
+xx	../simulation.py	/^xx = zeros((n*M))$/;"	kind:variable	line:13

@@ -1,0 +1,1007 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Solving Laplace Equation
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+This report presents a method for solving laplace equation for 2 dimensions.
+ 
+\end_layout
+
+\begin_layout Section
+Introduction 
+\end_layout
+
+\begin_layout Standard
+The current in the resistor depend its shape.
+ This report models a resistor by a wire soldered to the middle of copper
+ plate.
+\end_layout
+
+\begin_layout Subsection
+Resistor Modelling
+\end_layout
+
+\begin_layout Standard
+The copper plate is 1 cm by 1 cm in size.The wire is held at 1 volt.
+ The wire is of diameter 0.7cm.
+ One side of the plate is grounded, while the remaining are floating.
+\end_layout
+
+\begin_layout Subsection
+Derive Laplace equation for given problem
+\end_layout
+
+\begin_layout Enumerate
+From conductivity equation: 
+\begin_inset Formula 
+\[
+\overrightarrow{j}=\sigma\overrightarrow{E}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+electrical field is given by :
+\begin_inset Formula 
+\[
+\overrightarrow{E}=-\nabla\phi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+charge continuity equation :
+\begin_inset Formula 
+\[
+\nabla.\overrightarrow{j}=-\frac{\partial\rho}{\partial t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Above all equations result in (assuming 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is constant):
+\begin_inset Formula 
+\[
+\nabla^{2}\phi=\frac{1}{\sigma}\frac{\partial\rho}{\partial t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+for DC currents 
+\begin_inset Formula $\frac{\partial\rho}{\partial t}=0$
+\end_inset
+
+ this reduces above equation to 
+\begin_inset Formula $\nabla^{2}\phi=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Solve laplace equation
+\end_layout
+
+\begin_layout Enumerate
+For 2 dimension case the above equation in cartesian coordinates becomes
+ 
+\begin_inset Formula $\frac{\partial^{2}\phi}{\partial x^{2}}$
+\end_inset
+
++
+\begin_inset Formula $\frac{\partial^{2}\phi}{\partial y^{2}}=0$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+From central difference technique,
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial\phi}{\partial x}\mid_{(x_{i},y_{j})}=\frac{\phi(x_{i+1/2},y_{j})-\phi(x_{i-1/2},y_{j})}{\triangle x}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial^{2}\phi}{\partial x^{2}}\mid_{(x_{i},y_{j})}=\frac{\phi(x_{i+1},y_{j})-2\phi(x_{i},y_{j})+\phi(x_{i-1},y_{j})}{\triangle x^{2}}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+From above two equations 
+\begin_inset Formula $\phi_{i,j}$
+\end_inset
+
+can be calculated as
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\phi_{i,j}=\frac{\phi_{i+1,j}+\phi_{i-1,j}+\phi_{i,j+1}+\phi_{i,j-1}}{4}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+From equation 3 it is clear that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ at any point is average of its neighbours.
+\end_layout
+
+\begin_layout Section
+Method
+\end_layout
+
+\begin_layout Subsection
+Import packages required
+\end_layout
+
+\begin_layout LyX-Code
+#import libraries
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+import mpl_toolkits.mplot3d.axes3d as p3
+\end_layout
+
+\begin_layout LyX-Code
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout Subsection
+Set the model
+\end_layout
+
+\begin_layout Enumerate
+The parameters can also be taken from user by using sys.argv[i] where the
+ parameters are passed from terminal but here the values taken are
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#parameters 
+\end_layout
+
+\begin_layout LyX-Code
+Nx=25 # size along x
+\end_layout
+
+\begin_layout LyX-Code
+Ny=25 # size along y
+\end_layout
+
+\begin_layout LyX-Code
+radius=8# radius of central lead
+\end_layout
+
+\begin_layout LyX-Code
+Niter=1500# number of iterations to perform
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The potential matrix is made with zeros initally of size 
+\begin_inset Formula $Ny$
+\end_inset
+
+ rows and 
+\begin_inset Formula $Nx$
+\end_inset
+
+ columns
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#allocate potential array
+\end_layout
+
+\begin_layout LyX-Code
+phi = zeros((Ny,Nx))
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Define x and y coordinates for the plate
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#define x and y coordinates
+\end_layout
+
+\begin_layout LyX-Code
+x = linspace(-0.5,0.5,Nx)
+\end_layout
+
+\begin_layout LyX-Code
+y = linspace(-0.5,0.5,Ny)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Next get coordinates where wire which is of 1volt is present and set the
+ values in corresponding matrix to be 1
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#get coordinates where voltage is 1
+\end_layout
+
+\begin_layout LyX-Code
+Y,X = meshgrid(y,x)
+\end_layout
+
+\begin_layout LyX-Code
+ii = where(X*X +Y*Y <= 0.35*0.35)
+\end_layout
+
+\begin_layout LyX-Code
+#set their value to 1
+\end_layout
+
+\begin_layout LyX-Code
+phi[ii] = 1.0
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Plot the locus of points where voltage =1, The corresponding plot is shown
+ in figure 1.
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#plot the contour
+\end_layout
+
+\begin_layout LyX-Code
+plt.scatter(Y,X,(phi==1),color='r')
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('points where voltage=1')
+\end_layout
+
+\begin_layout LyX-Code
+plt.grid()
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Update Potential using equation 3
+\end_layout
+
+\begin_layout Enumerate
+Before updating phi take copy of phi into phiold.
+ The neighbour values can be obtained by left shift, right shift, down shift,
+ up shift of phi matrix.phi is then calculated by sum of all those shifted
+ matrices multiplied by 0.25.
+\end_layout
+
+\begin_layout Enumerate
+Since one side of plate is grounded it remains at 0.
+ The other three boundaries of plate take their neighbour values ie above
+ surface takes values just one below it.
+ right surface takes values of the one just right to it.
+\end_layout
+
+\begin_layout Enumerate
+The potential of wire which is of diameter 0.7cm remain at 1volt.
+\end_layout
+
+\begin_layout Enumerate
+For every iteration the maximum of absolute of phi and phiold are calculated
+ and stored in errors array.
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#update potential
+\end_layout
+
+\begin_layout LyX-Code
+count = 0
+\end_layout
+
+\begin_layout LyX-Code
+errors = zeros(Niter)
+\end_layout
+
+\begin_layout LyX-Code
+while(count < Niter):
+\end_layout
+
+\begin_layout LyX-Code
+    phiold = phi.copy()
+\end_layout
+
+\begin_layout LyX-Code
+    phi[1:-1,1:-1] = 0.25*(phiold[1:-1,0:-2]+phiold[1:-1,2:]+phiold[0:-2,1:-1]+ph
+iold[2:,1:-1]) 
+\end_layout
+
+\begin_layout LyX-Code
+    phi[1:-1,0] = phi[1:-1,1]
+\end_layout
+
+\begin_layout LyX-Code
+    phi[1:-1,-1] = phi[1:-1,-2]
+\end_layout
+
+\begin_layout LyX-Code
+    phi[-1,:] = phi [-2,:]
+\end_layout
+
+\begin_layout LyX-Code
+    phi[ii] = 1.0
+\end_layout
+
+\begin_layout LyX-Code
+    errors[count] = (abs(phi-phiold)).max()
+\end_layout
+
+\begin_layout LyX-Code
+    count+=1
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Fit the errors to a linear model
+\end_layout
+
+\begin_layout Enumerate
+The model which is approximated for error with iteration is 
+\begin_inset Formula 
+\[
+y=A\exp(Bx)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\log(y)=\log(A)+Bx
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The fit1 corresponds to taking iterations from 1 to 1500, fit2 corresponds
+ to iterations from 500 to 1500.
+\end_layout
+
+\begin_layout Enumerate
+The matrix equations for fit1(equation 4) and fit2(equation 5)are 
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{cc}
+1 & x_{1}\\
+1 & x_{2}\\
+\ldots & \ldots\\
+1 & x_{1500}
+\end{array}\right)\left(\begin{array}{c}
+\log A\\
+B
+\end{array}\right)=\left(\begin{array}{c}
+y_{1}\\
+y_{2}\\
+\ldots\\
+y_{1500}
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{cc}
+1 & x_{500}\\
+1 & x_{501}\\
+\ldots & \ldots\\
+1 & x_{1500}
+\end{array}\right)\left(\begin{array}{c}
+\log A\\
+B
+\end{array}\right)=\left(\begin{array}{c}
+y_{500}\\
+y_{501}\\
+\ldots\\
+y_{1500}
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Using lstsq get A,B .The plots of fit1 and fit2 are in figure 2
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#iteration vector
+\end_layout
+
+\begin_layout LyX-Code
+x0 = linspace(1,Niter,Niter)
+\end_layout
+
+\begin_layout LyX-Code
+#fit1
+\end_layout
+
+\begin_layout LyX-Code
+P = zeros((Niter,2))
+\end_layout
+
+\begin_layout LyX-Code
+P[:,0] = 1
+\end_layout
+
+\begin_layout LyX-Code
+P[:,1] = x0
+\end_layout
+
+\begin_layout LyX-Code
+q = log(errors)
+\end_layout
+
+\begin_layout LyX-Code
+A,B = lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+A = exp(A)
+\end_layout
+
+\begin_layout LyX-Code
+y1 = A*exp(B*x0)
+\end_layout
+
+\begin_layout LyX-Code
+#fit2
+\end_layout
+
+\begin_layout LyX-Code
+P = zeros((Niter-500,2))
+\end_layout
+
+\begin_layout LyX-Code
+P[:,0] = 1
+\end_layout
+
+\begin_layout LyX-Code
+P[:,1] = x0[500:]
+\end_layout
+
+\begin_layout LyX-Code
+q = log(errors[500:])
+\end_layout
+
+\begin_layout LyX-Code
+A,B = lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+A = exp(A)
+\end_layout
+
+\begin_layout LyX-Code
+y2 = A*exp(B*x0)
+\end_layout
+
+\begin_layout LyX-Code
+#plot both models
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlim(-50,1550)
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x0[::50],errors[::50],'bo')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x0[::50],y1[::50],'r^')
+\end_layout
+
+\begin_layout LyX-Code
+plt.semilogy(x0[500::50],y2[500::50],'g--')
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['errors','fit A','fit B which is after 500th iteration'],loc="best")
+\end_layout
+
+\begin_layout LyX-Code
+plt.grid()
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('number of iterations')
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel('error')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Surface plot of potential
+\end_layout
+
+\begin_layout Enumerate
+The surface plot of potential is in figure 3.
+ 
+\end_layout
+
+\begin_layout LyX-Code
+#surface plot of voltage
+\end_layout
+
+\begin_layout LyX-Code
+fig1 = figure(1)
+\end_layout
+
+\begin_layout LyX-Code
+ax = p3.Axes3D(fig1)
+\end_layout
+
+\begin_layout LyX-Code
+title('the 3-D surface plot of the potential')
+\end_layout
+
+\begin_layout LyX-Code
+surf=ax.plot_surface(X,Y,phi.T,rstride=1,cstride=1,cmap=cm.jet)
+\end_layout
+
+\begin_layout LyX-Code
+xlabel('X')
+\end_layout
+
+\begin_layout LyX-Code
+ylabel('Y')
+\end_layout
+
+\begin_layout LyX-Code
+ax.set_zlabel('potential')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\begin_layout Subsection
+Contour plot of potential 
+\end_layout
+
+\begin_layout Enumerate
+Both contour and contourf does the job of contour plot of potential.
+\end_layout
+
+\begin_layout Enumerate
+The contour plot of potential is in figure 4.
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#contour plot
+\end_layout
+
+\begin_layout LyX-Code
+contour(phi)
+\end_layout
+
+\begin_layout LyX-Code
+title('contour plot of potential')
+\end_layout
+
+\begin_layout LyX-Code
+show()
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Modelling currents
+\end_layout
+
+\begin_layout Enumerate
+The current densities 
+\begin_inset Formula $J_{x,ij},J_{y,ij}$
+\end_inset
+
+ are given as
+\begin_inset Formula 
+\[
+J_{x,ij}=\frac{1}{2}(\phi_{i,j-1}-\phi_{i,j+1})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J_{y,ij}=\frac{1}{2}(\phi_{i-1,j}-\phi_{i+1,j})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The quiver functions plots current density .The corresponding plot is in
+ figure 5
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#quiver plot
+\end_layout
+
+\begin_layout LyX-Code
+Jx = zeros((Ny,Nx))
+\end_layout
+
+\begin_layout LyX-Code
+Jy = zeros((Ny,Nx)) 
+\end_layout
+
+\begin_layout LyX-Code
+Jy[1:-1,1:-1] = 0.5*(phi[0:-2,1:-1]-phi[2:,1:-1]) 
+\end_layout
+
+\begin_layout LyX-Code
+Jx[1:-1,1:-1] = 0.5*(phi[1:-1,0:-2]-phi[1:-1,2:]) 
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(ii[1],ii[0],'ro')
+\end_layout
+
+\begin_layout LyX-Code
+plt.quiver(Jx[:,:],Jy[:,:])
+\end_layout
+
+\begin_layout LyX-Code
+plt.title('The vector plot of current flow')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Plots and Results
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Points where voltage=1
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_1.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+3-D surface plot of potential
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_2.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+errors vs iterations
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_3.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Contour plot of potential
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_4.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vector plot of current flow
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figure_5.png
+	width 80page%
+	height 40pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

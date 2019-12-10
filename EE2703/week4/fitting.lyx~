@@ -1,0 +1,1156 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.25cm
+\topmargin 1.25cm
+\rightmargin 1.25cm
+\bottommargin 1.25cm
+\headheight 1.25cm
+\headsep 1.25cm
+\footskip 1.25cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Fitting Data to Models
+\end_layout
+
+\begin_layout Author
+Mohammed Muqeeth
+\begin_inset Newline newline
+\end_inset
+
+EE16B026
+\begin_inset Newline newline
+\end_inset
+
+Electrical Engineering Department
+\begin_inset Newline newline
+\end_inset
+
+IIT Madras
+\end_layout
+
+\begin_layout Abstract
+This report presents linear fitting of data and the effect of noise on fitting
+ process.This report assumes two linear models for bessel function of first
+ type.
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Enumerate
+Bessel function of first type 
+\begin_inset Formula $J_{\nu}(x)$
+\end_inset
+
+ for large x can be approximated as,
+\begin_inset Formula 
+\begin{equation}
+J_{\nu}(x)\thickapprox\sqrt{\frac{2}{\pi x}}\cos(x-\frac{\nu\pi}{2}-\frac{\pi}{4})
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The best fit in the least-squares sense minimizes the sum of squared residuals
+ (a residual being: the difference between an observed value, and the fitted
+ value provided by a model).
+\end_layout
+
+\begin_layout Enumerate
+Two linear models taken for bessel function of first type are :
+\begin_inset Formula 
+\begin{equation}
+A\cos(x)+B\sin(x)\thickapprox J_{1}(x)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+A\frac{\cos(x)}{\sqrt{x}}+B\frac{\sin(x)}{\sqrt{x}}\thickapprox J_{1}(x)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+A,B values for modelA(Eqn 2) , modelB(Eqn 3) are estimated in least square
+ sense.
+\end_layout
+
+\begin_layout Section
+Methods
+\end_layout
+
+\begin_layout Subsection
+Get 
+\begin_inset Formula $J_{1}(x)$
+\end_inset
+
+ values which is obtained data
+\end_layout
+
+\begin_layout Enumerate
+Generate a vector x of 41 values from 0 to 20 using linspace.
+\end_layout
+
+\begin_layout Enumerate
+Define a function 
+\begin_inset Formula $jv(x)$
+\end_inset
+
+ to return 
+\begin_inset Formula $J_{1}(x)$
+\end_inset
+
+ vector.
+\end_layout
+
+\begin_layout Enumerate
+Below is python code to get 
+\begin_inset Formula $J_{1}(x)$
+\end_inset
+
+ vector :
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+#import required packages
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+import scipy.special as sp
+\end_layout
+
+\begin_layout LyX-Code
+#define bessel function
+\end_layout
+
+\begin_layout LyX-Code
+def jv(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return sp.jv(1,x)
+\end_layout
+
+\begin_layout LyX-Code
+#define vector x using linspace
+\end_layout
+
+\begin_layout LyX-Code
+n = 41 #number of observations
+\end_layout
+
+\begin_layout LyX-Code
+x = linspace(0,20,n)
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Estimation of A,B parameters of a Model and 
+\begin_inset Formula $\nu$
+\end_inset
+
+values
+\end_layout
+
+\begin_layout Enumerate
+Take an 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ from 0.5 to 18 .
+ For each 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ extract a subvector 
+\begin_inset Formula $x$
+\end_inset
+
+ where 
+\begin_inset Formula $x\geq x_{0}$
+\end_inset
+
+ and find vector 
+\begin_inset Formula $J_{1}(x)$
+\end_inset
+
+ for that corresponding vector 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+for each 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ fit vector 
+\begin_inset Formula $x$
+\end_inset
+
+ into models as :
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\cos(x).A+\sin(x).B=J_{1}(x)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\cos(x)}{\sqrt{x}}.A+\frac{\sin(x)}{\sqrt{x}}.B=J_{1}(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+This reduces to matrix equation of the form 
+\begin_inset Formula $P.\overrightarrow{a}=\overrightarrow{q}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+\cos(x_{1}) & \sin(x_{1})\\
+\cos(x_{2}) & \sin(x_{2})\\
+\ldots & \ldots\\
+\cos(x_{41}) & \sin(x_{41})
+\end{array}\right)\left(\begin{array}{c}
+A\\
+B
+\end{array}\right)=\left(\begin{array}{c}
+J_{1}(x_{1})\\
+J_{1}(x_{2})\\
+\ldots\\
+J_{1}(x_{41})
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\begin{array}{cc}
+\frac{\cos(x_{1})}{\sqrt{x_{1}}} & \frac{\sin(x_{1})}{\sqrt{x_{1}}}\\
+\frac{\cos(x_{2})}{\sqrt{x_{2}}} & \frac{\sin(x_{2})}{\sqrt{x_{2}}}\\
+\ldots & \ldots\\
+\frac{\cos(x_{41})}{\sqrt{x_{41}}} & \frac{\sin(x_{41})}{\sqrt{x_{41}}}
+\end{array}\right)\left(\begin{array}{c}
+A\\
+B
+\end{array}\right)=\left(\begin{array}{c}
+J_{1}(x_{1})\\
+J_{1}(x_{2})\\
+\ldots\\
+J_{1}(x_{41})
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The vector 
+\begin_inset Formula $\overrightarrow{a}$
+\end_inset
+
+ is estimated by 
+\begin_inset Formula $lstsq(P,q)$
+\end_inset
+
+ method of python which essentially does 
+\begin_inset Formula $a=inv(P'*P)*P'*q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+After getting A,B parameters calculate 
+\begin_inset Formula $\phi$
+\end_inset
+
+ from 
+\begin_inset Formula $\cos(\phi)=\frac{A}{\sqrt{A^{2}+B^{2}}}$
+\end_inset
+
+.The value of 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is calculated by equating 
+\begin_inset Formula $\phi=\frac{\nu\pi}{2}+\frac{\pi}{4}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+All the above computation is done by calling a function calcnu defined ourselves
+ which takes complete vector 
+\begin_inset Formula $x$
+\end_inset
+
+ defined under section 2.1 , 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+,model(whether A or B) and returns 
+\begin_inset Formula $\nu$
+\end_inset
+
+ for each 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+nu=calcnu(x,x0,eps,model)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The eps argument in above calcnu is discussed under section 2.3.
+ For noise less model take eps = 0 
+\end_layout
+
+\begin_layout Enumerate
+Append the 
+\begin_inset Formula $nu$
+\end_inset
+
+ values returned for each 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ into a list and plot it versus 
+\begin_inset Formula $x_{0}range$
+\end_inset
+
+ ie from 0.5 to 18 .
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+def calcnu(x,x0,eps,model):
+\end_layout
+
+\begin_layout LyX-Code
+    indices = where(x>=x0)
+\end_layout
+
+\begin_layout LyX-Code
+    #take from x0 to x
+\end_layout
+
+\begin_layout LyX-Code
+    x = x[indices]
+\end_layout
+
+\begin_layout LyX-Code
+    #get bessel function values in q matrix
+\end_layout
+
+\begin_layout LyX-Code
+    q = jv(x)+ eps*randn(size(x))
+\end_layout
+
+\begin_layout LyX-Code
+    #define matrix P 
+\end_layout
+
+\begin_layout LyX-Code
+    P = zeros((len(x),2))
+\end_layout
+
+\begin_layout LyX-Code
+    if(model == 'A'):
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,0] = cos(x)
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,1] = sin(x)
+\end_layout
+
+\begin_layout LyX-Code
+        A,B=lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+        phi = arccos(A/sqrt(A*A + B*B))
+\end_layout
+
+\begin_layout LyX-Code
+        nu = 2*(phi-pi/4)/pi
+\end_layout
+
+\begin_layout LyX-Code
+        return nu
+\end_layout
+
+\begin_layout LyX-Code
+    if(model == 'B'):
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,0] = cos(x)/sqrt(x)
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,1] = sin(x)/sqrt(x)
+\end_layout
+
+\begin_layout LyX-Code
+        A,B=lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+        phi = arccos(A/sqrt(A*A + B*B))
+\end_layout
+
+\begin_layout LyX-Code
+        nu = 2*(phi-pi/4)/pi
+\end_layout
+
+\begin_layout LyX-Code
+        return nu    
+\end_layout
+
+\begin_layout LyX-Code
+   
+\end_layout
+
+\begin_layout LyX-Code
+#define vector x using linspace
+\end_layout
+
+\begin_layout LyX-Code
+n = 41 #number of observations
+\end_layout
+
+\begin_layout LyX-Code
+x = linspace(0,20,n)
+\end_layout
+
+\begin_layout LyX-Code
+#for n=41 x0 ranges from 0.5 to 18 in steps of 0.5
+\end_layout
+
+\begin_layout LyX-Code
+x0_range = linspace(0.5,18,36)
+\end_layout
+
+\begin_layout LyX-Code
+nu_listA =[]
+\end_layout
+
+\begin_layout LyX-Code
+nu_listB =[]
+\end_layout
+
+\begin_layout LyX-Code
+nu_listnoiseB = []
+\end_layout
+
+\begin_layout LyX-Code
+for x0 in x0_range:
+\end_layout
+
+\begin_layout LyX-Code
+    nu_A = calcnu(x,x0,0,'A')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_B = calcnu(x,x0,0,'B')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_noiseB = calcnu(x,x0,0.01,'B')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listA.append(nu_A)
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listB.append(nu_B)
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listnoiseB.append(nu_noiseB)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The corresponding plots for model A, B are in Figure 1 with blue dots and
+ green dots respectively
+\end_layout
+
+\begin_layout Subsection
+Adding noise to model B
+\end_layout
+
+\begin_layout Enumerate
+The measurements made generally involve noise.
+\end_layout
+
+\begin_layout Enumerate
+To account for noise in model , add 
+\begin_inset Formula $randn(size(x))$
+\end_inset
+
+ to measured data ie 
+\begin_inset Formula $J_{1}(x)+eps*randn(size(x))$
+\end_inset
+
+ where 
+\begin_inset Formula $size(x)$
+\end_inset
+
+ is number of measurements.
+ 
+\end_layout
+
+\begin_layout Enumerate
+This adds normalised noise to measured values with standard deviation of
+ value 
+\begin_inset Formula $eps$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Results and discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $\nu$
+\end_inset
+
+ vs 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Model B is better than Model A since it accounts for 
+\begin_inset Formula $\sqrt{x}$
+\end_inset
+
+ in denominator of amplitude of Eqn 1 .
+ It can be seen from Figure 1.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+effect of noise for eps =0.1
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 2.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect of noise for eps = 0.05
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 4.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+As noise increases values deviate more from 1 for large 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ as shown in Figure 2,3.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect on quality of fit for number of measurements=101
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 3.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect on quality of fit for number of measurements=201
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 5.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect on quality of fit for number of measurements=501
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 6.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect on quality of fit for number of measurements=1001
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 7.png
+	width 80page%
+	height 30pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+As number of measurements increase from 41 to 1001 for the same range of
+ 
+\begin_inset Formula $x$
+\end_inset
+
+, the model with noise matches close to model B without noise as shown in
+ Figure 4,5,6.The models with no noise almost remain the same.
+\end_layout
+
+\begin_layout Section
+Python code :
+\end_layout
+
+\begin_layout LyX-Code
+#import required packages
+\end_layout
+
+\begin_layout LyX-Code
+from pylab import *
+\end_layout
+
+\begin_layout LyX-Code
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout LyX-Code
+from numpy import *
+\end_layout
+
+\begin_layout LyX-Code
+import scipy.special as sp
+\end_layout
+
+\begin_layout LyX-Code
+#define bessel function
+\end_layout
+
+\begin_layout LyX-Code
+def jv(x):
+\end_layout
+
+\begin_layout LyX-Code
+    return sp.jv(1,x)
+\end_layout
+
+\begin_layout LyX-Code
+#define calcnu function
+\end_layout
+
+\begin_layout LyX-Code
+def calcnu(x,x0,eps,model):
+\end_layout
+
+\begin_layout LyX-Code
+    indices = where(x>=x0)
+\end_layout
+
+\begin_layout LyX-Code
+    #take from x0 to x
+\end_layout
+
+\begin_layout LyX-Code
+    x = x[indices]
+\end_layout
+
+\begin_layout LyX-Code
+    #get bessel function values in q matrix
+\end_layout
+
+\begin_layout LyX-Code
+    q = jv(x)+ eps*randn(size(x))
+\end_layout
+
+\begin_layout LyX-Code
+    #define matrix P 
+\end_layout
+
+\begin_layout LyX-Code
+    P = zeros((len(x),2))
+\end_layout
+
+\begin_layout LyX-Code
+    if(model == 'A'):
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,0] = cos(x)
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,1] = sin(x)
+\end_layout
+
+\begin_layout LyX-Code
+        A,B=lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+        phi = arccos(A/sqrt(A*A + B*B))
+\end_layout
+
+\begin_layout LyX-Code
+        nu = 2*(phi-pi/4)/pi
+\end_layout
+
+\begin_layout LyX-Code
+        return nu
+\end_layout
+
+\begin_layout LyX-Code
+    if(model == 'B'):
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,0] = cos(x)/sqrt(x)
+\end_layout
+
+\begin_layout LyX-Code
+        P[:,1] = sin(x)/sqrt(x)
+\end_layout
+
+\begin_layout LyX-Code
+        A,B=lstsq(P,q)[0]
+\end_layout
+
+\begin_layout LyX-Code
+        phi = arccos(A/sqrt(A*A + B*B))
+\end_layout
+
+\begin_layout LyX-Code
+        nu = 2*(phi-pi/4)/pi
+\end_layout
+
+\begin_layout LyX-Code
+        return nu    
+\end_layout
+
+\begin_layout LyX-Code
+   
+\end_layout
+
+\begin_layout LyX-Code
+#define vector x using linspace
+\end_layout
+
+\begin_layout LyX-Code
+n = 41 #number of observations
+\end_layout
+
+\begin_layout LyX-Code
+x = linspace(0,20,n)
+\end_layout
+
+\begin_layout LyX-Code
+#for n=41 x0 ranges from 0.5 to 18 in steps of 0.5
+\end_layout
+
+\begin_layout LyX-Code
+x0_range = linspace(0.5,18,36)
+\end_layout
+
+\begin_layout LyX-Code
+nu_listA =[]
+\end_layout
+
+\begin_layout LyX-Code
+nu_listB =[]
+\end_layout
+
+\begin_layout LyX-Code
+nu_listnoiseB = []
+\end_layout
+
+\begin_layout LyX-Code
+for x0 in x0_range:
+\end_layout
+
+\begin_layout LyX-Code
+    nu_A = calcnu(x,x0,0,'A')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_B = calcnu(x,x0,0,'B')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_noiseB = calcnu(x,x0,0.01,'B')
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listA.append(nu_A)
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listB.append(nu_B)
+\end_layout
+
+\begin_layout LyX-Code
+    nu_listnoiseB.append(nu_noiseB)
+\end_layout
+
+\begin_layout LyX-Code
+plt.xlabel('$x_0$',fontsize = 18)
+\end_layout
+
+\begin_layout LyX-Code
+plt.ylabel(r'$
+\backslash
+nu$',fontsize = 18)
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x0_range,nu_listA,'go', markersize=5)
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x0_range,nu_listB,'bo', markersize=5)
+\end_layout
+
+\begin_layout LyX-Code
+plt.plot(x0_range,nu_listnoiseB,'ro', markersize=5)
+\end_layout
+
+\begin_layout LyX-Code
+plt.legend(['$
+\backslash
+epsilon$=0,model A','$
+\backslash
+epsilon$=0,model B','$
+\backslash
+epsilon$=0.01,model B'],loc ='lower right')
+\end_layout
+
+\begin_layout LyX-Code
+plt.grid(linestyle='dotted')
+\end_layout
+
+\begin_layout LyX-Code
+plt.show()
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_body
+\end_document
