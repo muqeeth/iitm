@@ -1,0 +1,8 @@
+Donald isA Quaker
+Donald isA Republican
+Quaker isA Paciﬁst
+Republican isA NOT Paciﬁst
+Republican isA Promilitary
+Paciﬁst isA NOT Promilitary
+Promilitary isA PoliticallyActive
+Paciﬁst isA PoliticallyActive

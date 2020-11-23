@@ -1,0 +1,6 @@
+Perry isA Platypus
+Platypus isA FurryAnimal
+Platypus isA EggLayer
+FurryAnimal isA Mammal
+EggLayer isA NOT Mammal
+Mammal isA MilkProducer

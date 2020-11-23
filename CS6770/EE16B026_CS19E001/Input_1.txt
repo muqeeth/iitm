@@ -1,0 +1,6 @@
+George isA Marine
+George isA Chaplain
+Marine isA Drinker
+Chaplain isA NOT Drinker
+Drinker isA Overweight
+Marine isA NOT Overweight
